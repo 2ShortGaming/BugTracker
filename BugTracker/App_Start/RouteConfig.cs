@@ -14,6 +14,16 @@ namespace BugTracker
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "NewSlug",
+                url: "Projects/Details/{slug}",
+                defaults: new
+                {
+                    controller = "Projects",
+                    action = "Details",
+                    slug = UrlParameter.Optional
+                });
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
