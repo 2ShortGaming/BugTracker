@@ -1,0 +1,98 @@
+﻿
+@model BugTracker.ViewModels.ProjectWizardVM
+
+
+@{
+    ViewBag.Title = "ProjectWizard";
+}
+<br />
+<br />
+<br />
+<br />
+
+
+
+@if (ViewBag.Errors.Length > 0)
+{<span class="text-danger col-3 offset-3">
+        @Html.Raw(ViewBag.Errors)
+    </span>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h2 class="col">ProjectWizard</h2>
+    <div class="form-horizontal col-12">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12" style="color:snow">
+                @Html.Editor("Name", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("ProjectManagerId", "Project Manager", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-12" style="color:snow">
+                @Html.DropDownList("ProjectManagerId", null, "--Project Manager--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("DeveloperIds", "Developers", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12" style="color:snow">
+                @Html.ListBox("DeveloperIds", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("SubmitterIds", "Submitters", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12" style="color:snow">
+                @Html.ListBox("SubmitterIds", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Create" class="btn btn-primary btn-block enter-btn" />
+            </div>
+        </div>
+        <div class="col offset-5">
+            @Html.ActionLink("Back to Projects", "Index")
+        </div>
+    </div>
+
+
+
+    <br />
+}
+@*<div class="row">
+        <div class="col">
+            <ul>
+                <li class="nav-item dropdown d-none d-lg-block">
+                    <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Project Manager</a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
+                        <h6 class="p-3 mb-0">Select Project Manager</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-item-content">
+                                <p class="preview-subject ellipsis mb-1">Software Development</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>*@
+
+
+

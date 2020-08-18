@@ -2,62 +2,161 @@
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
+    Layout = null;
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Swaney | bugTracker</title>
+    <!-- loader-->
+    <link href="~/Content/pace.min.css" rel="stylesheet" />
+    <script src="~/Scripts/pace.min.js"></script>
+
+    <!--favicon-->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <!-- Vector CSS -->
+    @*<link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />*@
+    <!-- simplebar CSS-->
+    <link href="~/Content/simplebar.css" rel="stylesheet" />
+    <!-- Bootstrap core CSS-->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- animate CSS-->
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <!-- Icons CSS-->
+    <link href="~/Content/icons.css" rel="stylesheet" />
+    <!-- Sidebar CSS-->
+    <link href="~/Content/sidebar-menu.css" rel="stylesheet" />
+    <!-- Custom Style-->
+    <link href="~/Content/app-style.css" rel="stylesheet" />
+</head>
+<body class="bg-theme bg-theme1">
+    <div id="wrapper">
+
+        <div class="loader-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+        <div class="card card-authentication1 mx-auto my-5">
+            <div class="card-body">
+                <div class="card-content p-2">
+                    <div class="text-center">
+                        <img src="~/Images/BTLOGOSM.png" alt="logo icon">
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                    <div class="card-title text-uppercase text-center py-3">Sign In</div>
+
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "text-left" })
+                            <div class="col-md-12">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "text-left" })
+                            <div class="col-md-12">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Log in" class="btn btn-primary btn-block enter-btn" />
+                            </div>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Forgot password?", "ForgotPassword")
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                        </p>
+                        <p>
+                            @Html.ActionLink("Register as a new user", "Register")
+                        </p>
+                    }
+                </div>
+            </div>
+            <div class="card-footer text-center py-3">
+                <p class="text-warning mb-0">Do not have an account? <a href="register.html"> Sign Up here</a></p>
+            </div>
+        </div>
+
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+        <!--End Back To Top Button-->
+        <!--start color switcher-->
+        <div class="right-sidebar">
+            <div class="switcher-icon">
+                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+            </div>
+            <div class="right-sidebar-content">
+
+                <p class="mb-0">Gaussion Texture</p>
+                <hr>
+
+                <ul class="switcher">
+                    <li id="theme1"></li>
+                    <li id="theme2"></li>
+                    <li id="theme3"></li>
+                    <li id="theme4"></li>
+                    <li id="theme5"></li>
+                    <li id="theme6"></li>
+                </ul>
+
+                <p class="mb-0">Gradient Background</p>
+                <hr>
+
+                <ul class="switcher">
+                    <li id="theme7"></li>
+                    <li id="theme8"></li>
+                    <li id="theme9"></li>
+                    <li id="theme10"></li>
+                    <li id="theme11"></li>
+                    <li id="theme12"></li>
+                    <li id="theme13"></li>
+                    <li id="theme14"></li>
+                    <li id="theme15"></li>
+                </ul>
+
+            </div>
+        </div>
+        <!--end color switcher-->
+
+    </div><!--wrapper-->
+    <!-- partial -->
+    <!-- main-panel ends -->
+    <!-- page-body-wrapper ends -->
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- simplebar js -->
+    <script src="~/Scripts/simplebar.js"></script>
+    <!-- sidebar-menu js -->
+    <script src="~/Scripts/sidebar-menu.js"></script>
+    <!-- loader scripts -->
+    @*<script src="assets/js/jquery.loading-indicator.js"></script>*@
+    <!-- Custom scripts -->
+    <script src="~/Scripts/app-script.js"></script>
+    <!-- Chart js -->
+    <script src="~/Scripts/Chart.min.js"></script>
+    <!-- Index js -->
+    <script src="~/Scripts/index.js"></script>
+
+
+</body>
+</html>

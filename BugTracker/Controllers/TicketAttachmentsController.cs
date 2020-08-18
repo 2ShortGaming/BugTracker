@@ -6,7 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using BugTracker.Models;
+using BugTracker.Helpers;
+using System.Web.Configuration;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -49,13 +53,29 @@ namespace BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,FilePath,Description,Created")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "TicketId,FileName")] TicketAttachment ticketAttachment, HttpPostedFileBase file, string attachmentDescription)
         {
             if (ModelState.IsValid)
             {
-                db.TicketAttachments.Add(ticketAttachment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (file == null)
+                {
+                    TempData["Error"] = "You must supply a file!";
+                    return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
+                }
+                if (FileHelper.IsWebFriendlyImage(file) || FileHelper.IsWebFriendlyFile(file))
+                {
+                    var fileName = FileHelper.MakeUnique(file.FileName);
+                    ticketAttachment.Description = attachmentDescription;
+                    ticketAttachment.Created = DateTime.Now;
+                    ticketAttachment.UserId = User.Identity.GetUserId();
+
+                    var serverFolder = WebConfigurationManager.AppSettings["DefaultAttachmentFolder"];
+                    file.SaveAs(Path.Combine(Server.MapPath(serverFolder), fileName));
+                    ticketAttachment.FilePath = $"{serverFolder}{fileName}";
+                    db.TicketAttachments.Add(ticketAttachment);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
             }
 
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketAttachment.TicketId);

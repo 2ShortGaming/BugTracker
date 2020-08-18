@@ -5,55 +5,88 @@
 
     var roleHelper = new RolesHelper();
 }
-<h2>Manage Roles</h2>
+
+
 <style>
     #UserIds {
-        min-height: 200px;
+        min-height: 250px;
+        min-width: 250px;
     }
 </style>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-3">
-            @Html.ListBox("UserIds")
-            @Html.DropDownList("RoleName", "--no role--")
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-4">
-            <button type="submit" class="btn btn-danger">Manage Role Assignment(s)</button>
-        </div>
-    </div>
-    <div class="col-8 col-md-offset-2">
-        <table class="table col-md-offset-2">
-            <tr>
-                <th style="color:white">
-                    @Html.DisplayName("User Email")
-                </th>
-                <th style="color:white">
-                    @Html.DisplayName("Role")
-                </th>
-            </tr>
+    <br />
+    <br />
+    <br />
+    <br />
 
-            @foreach (var person in Model)
-            {
+    <div class="container-fluid">
+        <h2 class="col-md-1 offset-4">Roles</h2>
+        <br />
+        <div class="row">
+            <div class="col-md-2 offset-4" style="color:snow">
+                <div class="form-group">
+                    @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12" style="color:snow">
+                        @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-4">
+                <div class="form-group">
+                    @Html.Label("RoleName", "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12" style="color:snow">
+                        @Html.DropDownList("RoleName", null, "--No Role--", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <button type="submit" class="btn btn-danger" style="width:250px">Manage Role Assignment(s)</button>
+            </div>
+        </div>
+        <br />
+
+        <table id="table" class="table col-md-6 offset-5">
+            <thead>
                 <tr>
-                    <td style="color:snow">
-                        @person.Email
-                    </td>
-                    <td style="color:snow">
-                        @roleHelper.ListUserRoles(person.Id).FirstOrDefault()
-                    </td>
+                    <th>
+                        @Html.DisplayName("User Email")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Role")
+                    </th>
                 </tr>
-            }
+
+            </thead>
+            <tbody>
+                @foreach (var person in Model)
+                {
+                    <tr>
+                        <td>
+                            @person.Email
+                        </td>
+                        <td>
+                            @roleHelper.ListUserRoles(person.Id).FirstOrDefault()
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
 
         </table>
+
     </div>
+  
 }
-
-
 
 
 

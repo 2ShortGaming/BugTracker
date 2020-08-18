@@ -10,13 +10,18 @@ namespace BugTracker.Controllers
 {
     public class AssignmentsController : Controller
     {
+
+        
         private ApplicationDbContext db = new ApplicationDbContext();
         private RolesHelper roleHelper = new RolesHelper();
+        private ProjectHelper projectHelper = new ProjectHelper();
+
+        #region Role Assignments
         // GET: Assignments
         //[Authorize(Roles = "Admin")]
         public ActionResult ManageRoles()
         {
-            //Use ViewBag tp hold a multi select list of Users
+            //Use ViewBag to hold a multi select list of Users
             //new multiselectlist(the data itself, "Id", "Email")
             ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
 
@@ -48,14 +53,42 @@ namespace BugTracker.Controllers
             }
             //step 2 - if a role is chose, add each person to that role
             return RedirectToAction("ManageRoles");
-
+           
         }
-
-
-
-        public ActionResult ManageUserRoles()
+        
+        public ActionResult ManageUserRole()
         {
             return View();
         }
+        #endregion
+
+        #region Project Assignments
+        public ActionResult ManageProjectUsers()
+        {
+            ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
+            ViewBag.ProjectIds = new MultiSelectList(db.Projects, "Id", "Name");
+            //var user = db.Users.ToList();
+            //var project = db.Projects.ToList();
+            return View(db.Users.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ManageProjectUsers(List<string>userIds, List<int>projectIds)
+        {
+            if(userIds == null || projectIds == null)
+            {
+            return RedirectToAction("ManageProjectUsers");
+            }
+            foreach (var userId in userIds)
+            {
+                foreach(var projectId in projectIds)
+                {
+                    projectHelper.AddUserToProject(userId, projectId);
+                }
+            }
+            return RedirectToAction("ManageProjectUsers");
+        }
+        #endregion
     }
 }

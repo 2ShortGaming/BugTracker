@@ -30,7 +30,7 @@ namespace BugTracker.Models
         {
             get
             {
-                return $"{LastName}, {FirstName}";
+                return $"{FirstName} {LastName}";
             }
         }
         #endregion

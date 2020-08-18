@@ -20,6 +20,7 @@ namespace BugTracker.Models
         public string Message { get; set; }
         public DateTime Created { get; set; }
         public bool IsRead { get; set; }
+     
         #endregion
 
     }

@@ -1,47 +1,91 @@
-﻿@model IEnumerable<BugTracker.Models.Project>
-
+﻿@using BugTracker.Models
+@using BugTracker.Helpers
+@model IEnumerable<Project>
 @{
-    ViewBag.Title = "Index";
+    var projectHelper = new ProjectHelper();
+    var roleHelper = new RolesHelper();
+    var userHelper = new UserHelper();
+    
 }
+    <style>
+        #UserIds {
+            min-height: 200px;
+        }
+    </style>
 
-<h2>Index</h2>
+
 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
 {
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsArchived)
-        </th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2>Manage Projects</h2>
+<div class="row">
+    <div class="col-md-2 col-md-offset-3">
+        <div class="form-group">
+            @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12" style="color:snow">
+                @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            @Html.Label("Projects", null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12" style="color:snow">
+                @Html.DropDownList("RoleName", null, "--Remove From Project--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        @Html.DropDownList("Add to Project", "--Remove From Project--")
+    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsArchived)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
-        </td>
-    </tr>
+</div>
+<div class="row">
+    <div class="col-md-offset-3 col-md-4">
+        <button type="submit" class="btn btn-danger">Manage Project Assignment(s)</button>
+    </div>
+</div>
 }
+
+<table id="table" class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayName("Project Name")
+        </th>
+        <th>
+            @Html.DisplayName("Participants")
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var project in Model)
+    {
+        <tr>
+            <td>
+                @Html.Display(project.Name)
+            </td>
+            <td>
+                @foreach (var user in projectHelper.ListUsersOnProject(project.Id))
+                {
+                    @user.FullName <br />
+                }
+            </td>
+        </tr>
+    }
+
+    </tbody>
 
 </table>
+

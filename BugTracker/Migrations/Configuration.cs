@@ -49,7 +49,7 @@ namespace BugTracker.Migrations
                     FirstName = "Brandon",
                     LastName = "Swaney",
                     AvatarPath = "/Avatars/default_user.png",
-                }, "Biggin112!");
+                }, "Abc&123!");
 
                 //get the id that just created by adding the above user
                 var userId = userManager.FindByEmail("brandon.o.swaney@gmail.com").Id;
@@ -68,8 +68,8 @@ namespace BugTracker.Migrations
                     AvatarPath = "/Avatars/default_user.png",
                 }, "Abc&123!");
 
-                var modId = userManager.FindByEmail("arussell@coderfoundry.com").Id;
-                userManager.AddToRole(modId, "Project Manager");
+                var userId = userManager.FindByEmail("arussell@coderfoundry.com").Id;
+                userManager.AddToRole(userId, "Project Manager");
             }
 
             if (!context.Users.Any(u => u.Email == "dev@mailinator.com"))
@@ -78,13 +78,13 @@ namespace BugTracker.Migrations
                 {
                     Email = "dev@mailinator.com",
                     UserName = "dev@mailinator.com",
-                    FirstName = "Brandon",
+                    FirstName = "Aydin",
                     LastName = "Swaney",
                     AvatarPath = "/Avatars/default_user.png",
                 }, "Abc&123!");
 
-                var modId = userManager.FindByEmail("dev@mailinator.com").Id;
-                userManager.AddToRole(modId, "Developer");
+                var userId = userManager.FindByEmail("dev@mailinator.com").Id;
+                userManager.AddToRole(userId, "Developer");
             }
 
             if (!context.Users.Any(u => u.Email == "sub@mailinator.com"))
@@ -98,9 +98,181 @@ namespace BugTracker.Migrations
                     AvatarPath = "/Avatars/default_user.png",
                 }, "Abc&123!");
 
-                var modId = userManager.FindByEmail("sub@mailinator.com").Id;
-                userManager.AddToRole(modId, "Submitter");
+                var userId = userManager.FindByEmail("sub@mailinator.com").Id;
+                userManager.AddToRole(userId, "Submitter");
             }
+
+            if (!context.Users.Any(u => u.Email == "dg@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "dg@mailinator.com",
+                    UserName = "dg@mailinator.com",
+                    FirstName = "Dick",
+                    LastName = "TGrayson",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("dg@mailinator.com").Id;
+                userManager.AddToRole(userId, "Submitter");
+            }
+
+            if (!context.Users.Any(u => u.Email == "bw@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "bw@mailinator.com",
+                    UserName = "bw@mailinator.com",
+                    FirstName = "Bruce",
+                    LastName = "Wayne",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("bw@mailinator.com").Id;
+                userManager.AddToRole(userId, "Submitter");
+            }
+
+            if (!context.Users.Any(u => u.Email == "jt@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "jt@mailinator.com",
+                    UserName = "jt@mailinator.com",
+                    FirstName = "Jason",
+                    LastName = "Todd",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("jt@mailinator.com").Id;
+                userManager.AddToRole(userId, "Submitter");
+            }
+
+            if (!context.Users.Any(u => u.Email == "mj@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "mj@mailinator.com",
+                    UserName = "mj@mailinator.com",
+                    FirstName = "Mr.",
+                    LastName = "J",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("mj@mailinator.com").Id;
+                userManager.AddToRole(userId, "Developer");
+            }
+
+            if (!context.Users.Any(u => u.Email == "sk@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "sk@mailinator.com",
+                    UserName = "sk@mailinator.com",
+                    FirstName = "Selena",
+                    LastName = "Kyle",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("sk@mailinator.com").Id;
+                userManager.AddToRole(userId, "Developer");
+            }
+
+            if (!context.Users.Any(u => u.Email == "td@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "td@mailinator.com",
+                    UserName = "td@mailinator.com",
+                    FirstName = "Tim",
+                    LastName = "Drake",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("td@mailinator.com").Id;
+                userManager.AddToRole(userId, "Developer");
+            }
+
+            if (!context.Users.Any(u => u.Email == "bg@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "bg@mailinator.com",
+                    UserName = "bg@mailinator.com",
+                    FirstName = "Barbara",
+                    LastName = "Gordon",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "Abc&123!");
+
+                var userId = userManager.FindByEmail("bg@mailinator.com").Id;
+                userManager.AddToRole(userId, "Developer");
+            }
+            context.SaveChanges();
+            #region TicketType Seed
+            context.TicketTypes.AddOrUpdate(
+                tt => tt.Name,
+                new TicketType() { Name = "Software" },
+                new TicketType() { Name = "Hardware" },
+                new TicketType() { Name = "UI" },
+                new TicketType() { Name = "Defect" },
+                new TicketType() { Name = "Other" },
+                new TicketType() { Name = "Feature Request" }
+                );
+            #endregion
+
+            #region TicketPriority Seed
+            context.TicketPriorities.AddOrUpdate(
+               tp => tp.Name,
+               new TicketPriority() { Name = "Low" },
+               new TicketPriority() { Name = "Medium" },
+               new TicketPriority() { Name = "High" },
+               new TicketPriority() { Name = "On Hold" }
+
+               );
+            #endregion
+
+            #region TicketStatus Seed
+            context.TicketStatuses.AddOrUpdate(
+               ts => ts.Name,
+               new TicketStatus() { Name = "Open" },
+               new TicketStatus() { Name = "Assigned" },
+               new TicketStatus() { Name = "Resolved" },
+               new TicketStatus() { Name = "Reopened" },
+               new TicketStatus() { Name = "Archived" }
+
+               );
+            #endregion
+            #region Project Seed
+            context.Projects.AddOrUpdate(
+                p => p.Name,
+                new Project() { Name = "Seed 1", Created = DateTime.Now.AddDays(-60), IsArchived = true },
+                new Project() { Name = "Seed 2", Created = DateTime.Now.AddDays(-45) },
+                new Project() { Name = "Seed 3", Created = DateTime.Now.AddDays(-30) },
+                new Project() { Name = "Seed 4", Created = DateTime.Now.AddDays(-15) },
+                new Project() { Name = "Seed 5", Created = DateTime.Now.AddDays(-7) }
+
+                );
+            #endregion
+            context.SaveChanges();
+
+            //#region Ticket Seed
+            //context.Tickets.AddOrUpdate(
+            //    t => t.Name,
+            //    new Ticket() { Name = "Tick Seed 1", Created = DateTime.Now.AddDays(-30) },
+            //    new Ticket() { Name = "Tick Seed 2", Created = DateTime.Now.AddDays(-30) },
+            //    new Ticket() { Name = "Tick Seed 3", Created = DateTime.Now.AddDays(-20) },
+            //    new Ticket() { Name = "Tick Seed 4", Created = DateTime.Now.AddDays(-18) },
+            //    new Ticket() { Name = "Tick Seed 5", Created = DateTime.Now.AddDays(-17) },
+            //    new Ticket() { Name = "Tick Seed 6", Created = DateTime.Now.AddDays(-15) },
+            //    new Ticket() { Name = "Tick Seed 7", Created = DateTime.Now.AddDays(-10) },
+            //    new Ticket() { Name = "Tick Seed 8", Created = DateTime.Now.AddDays(-5) }
+
+
+            //    );
+
+
+            //#endregion
+
+            //context.SaveChanges();
         }
     }
 }
