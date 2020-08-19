@@ -45,14 +45,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TicketStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
-                @Html.DropDownList("TicketStatusId", null, "--Ticket Status--", htmlAttributes: new { @class = "form-control", style = "color:snow" } )
-                @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Issue, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12">
                 @Html.EditorFor(model => model.Issue, new { htmlAttributes = new { @class = "form-control", style = "color:snow" } })

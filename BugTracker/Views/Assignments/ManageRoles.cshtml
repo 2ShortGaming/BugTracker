@@ -20,16 +20,15 @@
 
     <br />
     <br />
-    <br />
-    <br />
+    
 
     <div class="container-fluid">
-        <h2 class="col-md-1 offset-4">Roles</h2>
+        <h2 class="col-md-1 offset-5">Roles</h2>
         <br />
         <div class="row">
-            <div class="col-md-2 offset-4" style="color:snow">
+            <div class="col-md-8 offset-2" style="color:snow">
                 <div class="form-group">
-                    @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-6" })
                     <div class="col-md-12" style="color:snow">
                         @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
                     </div>
@@ -37,7 +36,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-4">
+            <div class="col-md-8 offset-2">
                 <div class="form-group">
                     @Html.Label("RoleName", "Role", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12" style="color:snow">
@@ -55,7 +54,7 @@
         </div>
         <br />
 
-        <table id="table" class="table col-md-6 offset-5">
+        <table id="table" class="table table-bordered table-light col-md-8">
             <thead>
                 <tr>
                     <th>
@@ -71,10 +70,10 @@
                 @foreach (var person in Model)
                 {
                     <tr>
-                        <td>
+                        <td style="background-color:dimgray">
                             @person.Email
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @roleHelper.ListUserRoles(person.Id).FirstOrDefault()
                         </td>
                     </tr>

@@ -1,7 +1,5 @@
 ﻿
 @model BugTracker.ViewModels.ProjectWizardVM
-
-
 @{
     ViewBag.Title = "ProjectWizard";
 }
@@ -9,16 +7,11 @@
 <br />
 <br />
 <br />
-
-
-
 @if (ViewBag.Errors.Length > 0)
 {<span class="text-danger col-3 offset-3">
         @Html.Raw(ViewBag.Errors)
     </span>
 }
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

@@ -26,7 +26,7 @@
             <button type="submit" class="btn btn-danger" style="width:250px">Assign Users</button>
         </div>
     </div>
-    <table class="table col-md-5">
+    <table class="table table-bordered table-light col-md-5">
         <tr>
             <th style="color:white">
                 @Html.DisplayName("User Email")
@@ -39,10 +39,10 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td style="color:snow">
+                <td style="background-color:dimgray">
                     @user.Email
                 </td>
-                <td style="color:snow">
+                <td style="background-color:dimgray">
                     @foreach(var project in projectHelper.ListUserProjects(user.Id))
                     {
                         @project.Name<br />

@@ -5,11 +5,14 @@ namespace BugTracker.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
+    using BugTracker.Helpers;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Web.Configuration;
 
     internal sealed class Configuration : DbMigrationsConfiguration<BugTracker.Models.ApplicationDbContext>
     {
+        private ProjectHelper projectHelper = new ProjectHelper(); 
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -17,6 +20,8 @@ namespace BugTracker.Migrations
 
         protected override void Seed(BugTracker.Models.ApplicationDbContext context)
         {
+            
+
             var roleManager = new RoleManager<IdentityRole>(
                new RoleStore<IdentityRole>(context));
 
@@ -37,8 +42,30 @@ namespace BugTracker.Migrations
                 roleManager.Create(new IdentityRole { Name = "Submitter" });
             }
 
+            if (!context.Roles.Any(r => r.Name == "DemoAdmin"))
+            {
+                roleManager.Create(new IdentityRole { Name = "DemoAdmin" });
+            }
+            if (!context.Roles.Any(r => r.Name == "DemoPM"))
+            {
+                roleManager.Create(new IdentityRole { Name = "DemoPM" });
+            }
+            if (!context.Roles.Any(r => r.Name == "DemoDev"))
+            {
+                roleManager.Create(new IdentityRole { Name = "DemoDev" });
+            }
+            if (!context.Roles.Any(r => r.Name == "DemoSub"))
+            {
+                roleManager.Create(new IdentityRole { Name = "DemoSub" });
+            }
+
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
+            var demoAdminPassword = WebConfigurationManager.AppSettings["DemoAdminPassword"];
+            var demoPMPassword = WebConfigurationManager.AppSettings["DemoPMPassword"];
+            var demoDevPassword = WebConfigurationManager.AppSettings["DemoDevPassword"];
+            var demoSubPassword = WebConfigurationManager.AppSettings["DemoSubPassword"];
+
 
             if (!context.Users.Any(u => u.Email == "brandon.o.swaney@gmail.com"))
             {
@@ -56,6 +83,75 @@ namespace BugTracker.Migrations
 
                 userManager.AddToRole(userId, "Admin");
             }
+
+            if (!context.Users.Any(u => u.Email == "DemoAdmin@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoAdmin@mailinator.com",
+                    UserName = "DemoAdmin@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Admin",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "DemoPassword");
+
+                //get the id that just created by adding the above user
+                var userId = userManager.FindByEmail("DemoAdmin@mailinator.com").Id;
+
+                userManager.AddToRole(userId, "DemoAdmin");
+            }
+
+            if (!context.Users.Any(u => u.Email == "DemoPM@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoPM@mailinator.com",
+                    UserName = "DemoPM@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "PM",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "DemoPassword");
+
+                //get the id that just created by adding the above user
+                var userId = userManager.FindByEmail("DemoPM@mailinator.com").Id;
+
+                userManager.AddToRole(userId, "DemoPM");
+            }
+
+            if (!context.Users.Any(u => u.Email == "DemoDev@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoDev@mailinator.com",
+                    UserName = "DemoDev@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Dev",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "DemoPassword");
+
+                //get the id that just created by adding the above user
+                var userId = userManager.FindByEmail("DemoDev@mailinator.com").Id;
+
+                userManager.AddToRole(userId, "DemoDev");
+            }
+
+            if (!context.Users.Any(u => u.Email == "DemoSub@mailinator.com"))
+            {
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoSub@mailinator.com",
+                    UserName = "DemoSub@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Sub",
+                    AvatarPath = "/Avatars/default_user.png",
+                }, "DemoPassword");
+
+                //get the id that just created by adding the above user
+                var userId = userManager.FindByEmail("DemoSub@mailinator.com").Id;
+
+                userManager.AddToRole(userId, "DemoSub");
+            }
+
 
             if (!context.Users.Any(u => u.Email == "arussell@coderfoundry.com"))
             {
@@ -253,6 +349,17 @@ namespace BugTracker.Migrations
                 );
             #endregion
             context.SaveChanges();
+
+            var userList = context.Users.ToList();
+            var projectList = context.Projects.ToList();
+            foreach(var project in projectList)
+            {
+                    foreach( var user in userList)
+                {
+                        projectHelper.AddUserToProject(user.Id, project.Id);
+                  
+                }
+            }
 
             //#region Ticket Seed
             //context.Tickets.AddOrUpdate(

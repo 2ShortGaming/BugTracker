@@ -6,11 +6,11 @@
 <br />
 <br />
 
-<h2 class="col-12">Users</h2>
+<h2 class="col-6 offset-5">Users</h2>
 <br />
 <br />
 
-<table id="table" class="table col-12">
+<table id="table" class="table table-bordered table-light col-12">
     <thead>
         <tr>
 
@@ -20,7 +20,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayName("Manage")
+            </th>
         </tr>
     </thead>
 
@@ -29,14 +31,13 @@
     {
         <tbody>
             <tr>
-                <td>
+                <td style="background-color:dimgray">
                     @Html.DisplayFor(modelItem => user.FullName)
                 </td>
-                <td>
+                <td style="background-color:dimgray">
                     @Html.DisplayFor(modelItem => user.Email)
                 </td>
-
-                <td>
+                <td style="background-color:dimgray">
                     @Html.ActionLink("Manage Role", "ManageUserRole") |
                     @Html.ActionLink("Manage Projects", "ProjectWizard")
                 </td>

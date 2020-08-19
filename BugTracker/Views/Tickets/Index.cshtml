@@ -20,18 +20,17 @@
         <br />
         @if (User.IsInRole("Submitter"))
         {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-3">
-                    <input type="submit" value="Create New" class="btn btn-primary btn-block enter-btn" href="@Url.Action("Create", "Tickets")"/>
-                </div>
-            </div>
-            @*<button class="btn btn-primary">
-                @Html.ActionLink("Create New", "Create")
-            </button>*@
+          
+            <button class="btn btn-primary">
+                @Html.ActionLink("+Create New Ticket", "Create")
+            </button>
 
         }
+        <br />
+        <br />
+
        
-        <table id="table" class="table">
+        <table id="table" class="table-sm table-bordered table-light col-md-12">
             <thead>
                 <tr>
                     <th>
@@ -68,7 +67,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.IsArchived)
                     </th>
-                    <th></th>
+                   <th></th>
                 </tr>
 
             </thead>
@@ -77,51 +76,51 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.Project.Name)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TicketTypeId)
+                        <td style="background-color:dimgray">
+                            @Html.DisplayFor(modelItem => item.TicketType.Name)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TicketPriorityId)
+                        <td style="background-color:dimgray">
+                            @Html.DisplayFor(modelItem => item.TicketPriority.Name)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TicketStatusId)
+                        <td style="background-color:dimgray">
+                            @Html.DisplayFor(modelItem => item.TicketStatus.Name)
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.Submitter.FullName)
                         </td>
-                        @if (item.DeveloperId != null)
-                        {
-                            <td>
+                        @*@if (item.DeveloperId != null)*@
+                        @*{*@
+                            <td style="background-color:dimgray">
                                 @Html.DisplayFor(modelItem => item.Developer.FullName)
                             </td>
 
-                        }
+                        @*}
                         else
                         {
-                            <span>No Developer Assigned</span>
-                        }
-                        <td>
+                            <span>No Dev</span>
+                        }*@
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.Issue)
                         </td>
 
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.Created)
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.Updated)
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.IsResolved)
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.DisplayFor(modelItem => item.IsArchived)
                         </td>
-                        <td>
+                        <td style="background-color:dimgray">
                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                            @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
 
                         </td>
                     </tr>
@@ -132,8 +131,8 @@
 
         @if (User.IsInRole("Developer"))
         {
-            <table class="table col-4 offset-3">
-
+            <table class="table table-bordered table-light col-4 offset-3">
+                <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Project.Name)
@@ -173,9 +172,9 @@
                     </th>
                     <th></th>
                 </tr>
-
+                </thead>
                 @foreach (var item in Model.Where(t => t.DeveloperId == User.Identity.GetUserId()))
-                {
+                {   <tbody>
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Project.Name)
@@ -215,10 +214,11 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                            @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
 
                         </td>
                     </tr>
+                </tbody>
                 }
 
             </table>

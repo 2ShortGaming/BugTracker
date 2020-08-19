@@ -42,6 +42,8 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
             return View(project);
         }
 

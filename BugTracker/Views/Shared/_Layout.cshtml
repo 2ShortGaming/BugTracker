@@ -28,6 +28,11 @@
     <link href="~/Content/simplebar.css" rel="stylesheet" />
     <!-- Bootstrap core CSS-->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.jqueryui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
     <!-- animate CSS-->
     <link href="~/Content/animate.css" rel="stylesheet" />
     <!-- Icons CSS-->
@@ -88,7 +93,7 @@
                 }
 
                 <li>
-                    <a href=@Url.Action("Dashboard", "Tickets")>
+                    <a href=@Url.Action("Index", "Tickets")>
                         <i class="zmdi zmdi-grid"></i> <span>Tickets</span>
                     </a>
                 </li>
@@ -294,7 +299,11 @@
     <script src="~/Scripts/Chart.min.js"></script>
     <!-- Index js -->
     <script src="~/Scripts/index.js"></script>
-
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/dataTables.jqueryui.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script>
         $('.table').DataTable();
 
@@ -302,6 +311,7 @@
             $
         })
     </script>
+    @RenderSection("Scripts", false)
 </body>
 
 </html>

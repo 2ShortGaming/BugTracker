@@ -1,5 +1,6 @@
 ﻿using BugTracker.Helpers;
 using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,5 +41,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("ManageUserRole", new { id });
 
         }
+
+        
     }
 }

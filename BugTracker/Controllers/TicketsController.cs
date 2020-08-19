@@ -21,6 +21,7 @@ namespace BugTracker.Controllers
         private ProjectHelper projectHelper = new ProjectHelper();
         private RolesHelper rolesHelper = new RolesHelper();
         private TicketHelper ticketHelper = new TicketHelper();
+        private HistoryHelper historyHelper = new HistoryHelper();
         
         // GET: Tickets
         
@@ -114,7 +115,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Submitter")]
-        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,Issue,IssueDescription")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketTypeId,TicketPriorityId,Issue,IssueDescription")] Ticket ticket)
         {
             var userId = User.Identity.GetUserId();
             if (ModelState.IsValid)
@@ -166,6 +167,7 @@ namespace BugTracker.Controllers
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                historyHelper.ManageHistories(oldTicket, newTicket); 
                 ticketHelper.ManageTicketNotifications(oldTicket, newTicket);
                 return RedirectToAction("Index");
             }

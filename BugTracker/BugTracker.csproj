@@ -176,8 +176,6 @@
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TicketAttachmentsController.cs" />
     <Compile Include="Controllers\TicketCommentsController.cs" />
-    <Compile Include="Controllers\TicketHistoriesController.cs" />
-    <Compile Include="Controllers\TicketNotificationsController.cs" />
     <Compile Include="Controllers\TicketPrioritiesController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TicketStatusController.cs" />
@@ -187,6 +185,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\HistoryHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\RolesHelper.cs" />
     <Compile Include="Helpers\SlugMaker.cs" />
@@ -217,9 +216,13 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\app-style.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\dataTables.jqueryui.min.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\icons.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\pace.min.css" />
+    <Content Include="Content\responsive.dataTables.min.css" />
     <Content Include="Content\sidebar-menu.css" />
     <Content Include="Content\simplebar.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -254,7 +257,12 @@
     <Content Include="Scripts\app-script.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\dataTables.responsive.min.js" />
     <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\pace.min.js" />
     <Content Include="Scripts\popper.min.js" />
@@ -377,6 +385,7 @@
     <Content Include="Views\Assignments\ManageProjectUsers.cshtml" />
     <Content Include="Views\Projects\ProjectWizard.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\DemoLogin.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -402,7 +402,7 @@ hr {
 }
 
 #theme1 {
-  background-image: url(../images/bg-themes/1.png);
+  background-image: url(../Images/bg-themes/1.png);
   background-size: 100% 100%;
   background-position: center;
   transition: background .3s;
