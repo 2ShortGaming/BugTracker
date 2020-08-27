@@ -18,6 +18,7 @@ using BugTracker.ViewModels;
 namespace BugTracker.Controllers
 {
     [Authorize]
+    //[RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -180,46 +181,46 @@ namespace BugTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(Models.RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+    //    public async Task<ActionResult> Register(Models.RegisterViewModel model)
+    //    {
+    //        if (ModelState.IsValid)
+    //        {
                
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+    //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+    //            var result = await UserManager.CreateAsync(user, model.Password);
+    //            if (result.Succeeded)
+    //            {
+    //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    try
-                    {
-                        var from = "Swaney BugTracker<admin@swaneyBugTracker.com>";
-                        var email = new MailMessage(from, model.Email)
-                        {
-                            Subject = "Please verify your account",
-                            Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>",
-                            IsBodyHtml = true
-                        };
-                        var svc = new EmailService();
-                        await svc.SendAsync(email);
-                    }
-                    catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    await Task.FromResult(0);
-                }
-                return RedirectToAction("Index", "Home");
-            }
-            AddErrors(result);
-        }
+    //                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+    //                // Send an email with this link
+    //                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+    //                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+    //                try
+    //                {
+    //                    var from = "Swaney BugTracker<admin@swaneyBugTracker.com>";
+    //                    var email = new MailMessage(from, model.Email)
+    //                    {
+    //                        Subject = "Please verify your account",
+    //                        Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>",
+    //                        IsBodyHtml = true
+    //                    };
+    //                    var svc = new EmailService();
+    //                    await svc.SendAsync(email);
+    //                }
+    //                catch (Exception ex)
+    //            {
+    //                Console.WriteLine(ex.Message);
+    //                await Task.FromResult(0);
+    //            }
+    //            return RedirectToAction("Index", "Home");
+    //        }
+    //        AddErrors(result);
+    //    }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-    }
+    //        // If we got this far, something failed, redisplay form
+    //        return View(model);
+    //}
         
         public async Task<ActionResult> Register(Models.ExtendedRegisterViewModel model)
         {
@@ -510,7 +511,7 @@ namespace BugTracker.Controllers
                 // If the user does not have an account, then prompt the user to create an account
                 ViewBag.ReturnUrl = returnUrl;
                 ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                return View("ExternalLoginConfirmation", new CustomExternalRegister { Email = loginInfo.Email });
         }
     }
 
@@ -519,7 +520,7 @@ namespace BugTracker.Controllers
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+    public async Task<ActionResult> ExternalLoginConfirmation(CustomExternalRegister model, string returnUrl)
     {
         if (User.Identity.IsAuthenticated)
         {
@@ -534,7 +535,14 @@ namespace BugTracker.Controllers
             {
                 return View("ExternalLoginFailure");
             }
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser 
+            { 
+                
+                FirstName = model.FirstName, 
+                LastName = model.LastName,
+                UserName = model.Email,
+
+            };
             var result = await UserManager.CreateAsync(user);
             if (result.Succeeded)
             {

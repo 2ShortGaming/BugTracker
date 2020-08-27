@@ -17,7 +17,9 @@ namespace BugTracker.Models
         #endregion
 
         #region Actual Properties
+        public string Subject { get; set; }
         public string Message { get; set; }
+        public string NotificationType { get; set; }
         public DateTime Created { get; set; }
         public bool IsRead { get; set; }
      

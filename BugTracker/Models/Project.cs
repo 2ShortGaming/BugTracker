@@ -18,6 +18,8 @@ namespace BugTracker.Models
         public string Name { get; set; }
         public DateTime Created { get; set; }
         public bool IsArchived { get; set; }
+        public string SubmitterId { get; set; }
+        public string DeveloperId { get; set; }
         #endregion
 
         #region Contructor

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
+
 
 namespace BugTracker.Helpers
 {
@@ -71,5 +73,30 @@ namespace BugTracker.Helpers
             return resultList;
         }
 
+        public List<Project> GetMyProjects()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                    return db.Projects.ToList();
+                case "Project Manager":
+                    var projectList = new List<Project>();
+                    foreach (var project in ListUserProjects(userId).ToList())
+                    {
+                        projectList.AddRange(db.Projects.ToList());
+                    }
+                    return projectList;
+                case "Developer":
+                    return db.Projects.Where(t => t.DeveloperId == userId).ToList();
+                case "Submitter":
+                    return db.Projects.Where(t => t.SubmitterId == userId).ToList();
+                default:
+                    return null;
+            }
+        }
+
+
     }
-}
+}      

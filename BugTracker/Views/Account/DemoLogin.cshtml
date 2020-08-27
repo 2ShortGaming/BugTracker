@@ -42,7 +42,7 @@
             <div class="card-body">
                 <div class="card-content p-2">
                     <div class="text-center">
-                        <img src="~/Images/BTLOGO.png" alt="logo icon">
+                        <img src="~/Images/BTSmall.png" style="height:80px; width:80px" alt="logo icon">
                     </div>
                     <div class="card-title text-uppercase text-center py-3">Demo Login</div>
                     <div class="row" id="AdminRow">
@@ -118,7 +118,7 @@
                             </div>
                           
                             <p>
-                                @Html.ActionLink("Register as a New User", "Register")
+                                @Html.ActionLink("Back to Login", "Login")
                             </p>
                         }
 
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <div class="card-footer text-center py-3">
-                <p class="text-warning mb-0">Do not have an account? <a href="register.html"> Sign Up here</a></p>
+                <p class="text-warning mb-0">Do not have an account? <a href="@Url.Action("Register", "Account")"> Sign Up here</a></p>
             </div>
         </div>
 

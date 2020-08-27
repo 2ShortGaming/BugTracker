@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssignmentsController.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -186,6 +187,7 @@
     </Compile>
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\HistoryHelper.cs" />
+    <Compile Include="Helpers\NotificationHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\RolesHelper.cs" />
     <Compile Include="Helpers\SlugMaker.cs" />
@@ -196,7 +198,9 @@
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectNotification.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketAttachment.cs" />
     <Compile Include="Models\TicketComment.cs" />
@@ -207,6 +211,7 @@
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChartsVM.cs" />
     <Compile Include="ViewModels\ProjectWizardVM.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
@@ -219,8 +224,12 @@
     <Content Include="Content\dataTables.bootstrap4.min.css" />
     <Content Include="Content\dataTables.jqueryui.min.css" />
     <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Content\fullcalendar.min.css" />
+    <Content Include="Content\fullcalendar.print.min.css" />
     <Content Include="Content\icons.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\main.min.css" />
     <Content Include="Content\pace.min.css" />
     <Content Include="Content\responsive.dataTables.min.css" />
     <Content Include="Content\sidebar-menu.css" />
@@ -237,14 +246,25 @@
     <Content Include="Images\bg-themes\4.png" />
     <Content Include="Images\bg-themes\5.png" />
     <Content Include="Images\bg-themes\6.png" />
+    <Content Include="Images\bmp.png" />
     <Content Include="Images\BtLogo2.png" />
     <Content Include="Images\BtLogo3.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\BTLOGO.png" />
     <Content Include="Images\BTLOGOSM.png" />
+    <Content Include="Images\BTSmall.png" />
+    <Content Include="Images\default.png" />
+    <Content Include="Images\doc.png" />
+    <Content Include="Images\docx.png" />
     <Content Include="Images\gallery\cd-icon-navigation.svg" />
+    <Content Include="Images\gif.png" />
     <Content Include="Images\github.png" />
+    <Content Include="Images\jpeg.png" />
+    <Content Include="Images\jpg.png" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\png.png" />
+    <Content Include="Images\tiff.png" />
     <Content Include="Images\timeline\angular-icon.svg" />
     <Content Include="Images\timeline\bootstrap-4.svg" />
     <Content Include="Images\timeline\cd-arrow.svg" />
@@ -254,6 +274,9 @@
     <Content Include="Images\timeline\css-3.svg" />
     <Content Include="Images\timeline\html5.svg" />
     <Content Include="Images\timeline\react.svg" />
+    <Content Include="Images\txt.png" />
+    <Content Include="Images\xls.png" />
+    <Content Include="Images\xlsx.png" />
     <Content Include="Scripts\app-script.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -261,9 +284,15 @@
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
+    <Content Include="Scripts\fullcalendar-custom-script.js" />
+    <Content Include="Scripts\fullcalendar.js" />
+    <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\locales-all.min.js" />
+    <Content Include="Scripts\main.min.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\pace.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\sidebar-menu.js" />
@@ -349,6 +378,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
+    <Folder Include="Views\Charts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -386,6 +417,8 @@
     <Content Include="Views\Projects\ProjectWizard.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\DemoLogin.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
+    <None Include="Properties\PublishProfiles\swaneybugtracker - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -24,10 +25,29 @@ namespace BugTracker.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-           
-            ViewBag.Projects = new MultiSelectList(db.Projects.ToList());
             ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
+            ViewBag.Projects = new SelectList(db.Projects.ToList());
             return View(db.Projects.ToList());
+        }
+
+        public ActionResult GetMyProjects()
+        {
+            var userId = User.Identity.GetUserId();
+            var projectList = new List<Project>();
+            if (User.IsInRole("Developer"))
+            {
+                projectList = db.Projects.Where(t => t.DeveloperId == userId).ToList();
+                return View("Index", projectList);
+            }
+            if (User.IsInRole("Submitter"))
+            {
+                projectList = db.Projects.Where(t => t.SubmitterId == userId).ToList();
+                return View("Index", projectList);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Projects");
+            }
         }
 
         // GET: Projects/Details/5
@@ -48,7 +68,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin")]
         [Authorize]
         public ActionResult Create()
         {
@@ -89,6 +109,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult ProjectWizard(ProjectWizardVM model)
         {
             #region Fail Cases

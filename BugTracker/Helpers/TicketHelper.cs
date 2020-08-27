@@ -11,6 +11,8 @@ namespace BugTracker.Helpers
     {
         private RolesHelper roleHelper = new RolesHelper();
         private ApplicationDbContext db = new ApplicationDbContext();
+        private HistoryHelper historyHelper = new HistoryHelper();
+        private ProjectHelper projectHelper = new ProjectHelper();
         public bool CanMakeComment(int ticketId)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
@@ -92,6 +94,46 @@ namespace BugTracker.Helpers
             }
         }
 
+        public void EditedTicket(Ticket oldTicket, Ticket newTicket)
+        {
+            historyHelper.ManageHistories(oldTicket, newTicket);
+            ManageTicketNotifications(oldTicket, newTicket);
+        }
+
+        public List<Ticket> GetMyTickets()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                    return db.Tickets.ToList();
+                case "Project Manager":
+                    var ticketList = new List<Ticket>();
+                    foreach (var project in projectHelper.ListUserProjects(userId).ToList())
+                    {
+                        ticketList.AddRange(project.Tickets.ToList());
+                    }
+                    return ticketList;
+                case "Developer":
+                    return db.Tickets.Where(t => t.DeveloperId == userId).ToList();
+                case "Submitter":
+                    return db.Tickets.Where(t => t.SubmitterId == userId).ToList();
+                default:
+                    return null;
+            }
+        }
+
+        public List<ApplicationUser> ListTicketUsers(int TicketId)
+        {
+            var UserList = new List<ApplicationUser>();
+            var ticket = db.Tickets.Find(TicketId);
+            UserList.Add(ticket.Developer);
+            UserList.Add(ticket.Submitter);
+            UserList.Add(projectHelper.ListUserOnProjectInRole(ticket.ProjectId, "ProjectManager").FirstOrDefault());
+            return UserList;
+        }
+
         public void ManageTicketNotifications(Ticket oldTicket, Ticket newTicket)
         {
             if (oldTicket.DeveloperId != newTicket.DeveloperId && newTicket.DeveloperId != null)
@@ -109,7 +151,12 @@ namespace BugTracker.Helpers
 
             }
         }
-
+        public List<Ticket> GetAllProjectTicketsForUser(string userId)
+        {
+            var user = db.Users.Find(userId);
+            var ticketList = new List<Ticket>();
+            return user.Projects.SelectMany(p => p.Tickets).ToList();
+        }
 
     }
 }

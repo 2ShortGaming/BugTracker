@@ -7,20 +7,19 @@
 <br />
 <br />
 <br />
-@if (ViewBag.Errors.Length > 0)
-{<span class="text-danger col-3 offset-3">
-        @Html.Raw(ViewBag.Errors)
-    </span>
-}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <br />
-    <br />
-    <br />
-    <br />
+    
+    <div class="row">
+        <h2 class="col-3">ProjectWizard</h2>
+        @if (ViewBag.Errors.Length > 0)
+        {<span class="text-danger col-3 offset-3">
+                @Html.Raw(ViewBag.Errors)
+            </span>
+        }
 
-    <h2 class="col">ProjectWizard</h2>
+    </div>
     <div class="form-horizontal col-12">
 
         <hr />
@@ -42,13 +41,13 @@
         <div class="form-group">
             @Html.Label("DeveloperIds", "Developers", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12" style="color:snow">
-                @Html.ListBox("DeveloperIds", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ListBox("DeveloperIds", null, htmlAttributes: new { @class = "form-control", style = "height:75px" })
             </div>
         </div>
         <div class="form-group">
             @Html.Label("SubmitterIds", "Submitters", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12" style="color:snow">
-                @Html.ListBox("SubmitterIds", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ListBox("SubmitterIds", null, htmlAttributes: new { @class = "form-control", style = "height:115px" })
             </div>
         </div>
 

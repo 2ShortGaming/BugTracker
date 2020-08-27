@@ -14,6 +14,7 @@ using System.IO;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
     public class TicketAttachmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

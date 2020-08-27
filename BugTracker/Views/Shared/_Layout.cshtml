@@ -6,6 +6,9 @@
 @{
     var userHelper = new UserHelper();
     var rolesHelper = new RolesHelper();
+    var projectHelper = new ProjectHelper();
+    var historyHelper = new HistoryHelper();
+    var ticketHelper = new TicketHelper();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +22,12 @@
     <!-- loader-->
     <link href="~/Content/pace.min.css" rel="stylesheet" />
     <script src="~/Scripts/pace.min.js"></script>
-
     <!--favicon-->
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
+    <script src="~/Scripts/fullcalendar.min.js"></script>
+    <link href="~/Content/main.min.css" rel="stylesheet" />
+
     <!-- Vector CSS -->
     @*<link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />*@
     <!-- simplebar CSS-->
@@ -33,12 +39,15 @@
     <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/Content/dataTables.jqueryui.min.css" rel="stylesheet" />
     <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+
+
     <!-- animate CSS-->
     <link href="~/Content/animate.css" rel="stylesheet" />
     <!-- Icons CSS-->
     <link href="~/Content/icons.css" rel="stylesheet" />
     <!-- Sidebar CSS-->
     <link href="~/Content/sidebar-menu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <!-- Custom Style-->
     <link href="~/Content/app-style.css" rel="stylesheet" />
 </head>
@@ -65,13 +74,13 @@
                 {
                     <li>
                         <a href=@Url.Action("Index", "Users")>
-                            <i class="zmdi zmdi-invert-colors"></i> <span>Users</span>
+                            <i class="zmdi zmdi-male-female"></i> <span>Users</span>
                         </a>
                     </li>
 
                     <li>
                         <a href=@Url.Action("ManageRoles", "Assignments")>
-                            <i class="zmdi zmdi-invert-colors"></i> <span>Manage Roles</span>
+                            <i class="zmdi zmdi-male-female"></i> <span>Manage Roles</span>
                         </a>
                     </li>
 
@@ -94,49 +103,30 @@
 
                 <li>
                     <a href=@Url.Action("Index", "Tickets")>
-                        <i class="zmdi zmdi-grid"></i> <span>Tickets</span>
+                        <i class="zmdi zmdi-ticket-star"></i> <span>Tickets</span>
                     </a>
                 </li>
                 @if (User.IsInRole("Submitter"))
                 {
                     <li>
                         <a href=@Url.Action("Create", "Tickets")>
-                            <i class="zmdi zmdi-grid" id="myModal" data-toggle="modal" data-target="#myModal"></i> <span>+ New Ticket</span>
+                            <i class="zmdi zmdi-ticket-star" id="myModal" data-toggle="modal" data-target="#myModal"></i> <span>+ New Ticket</span>
                         </a>
                     </li>
 
                 }
 
-                <li>
-                    <a href="calendar.html">
-                        <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-                        <small class="badge float-right badge-light">New</small>
-                    </a>
-                </li>
+                @*<li>
+                        <a href="calendar.html">
+                            <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+                        </a>
+                    </li>*@
 
                 <li>
-                    <a href="profile.html">
+                    <a href=@Url.Action("About", "Home")>
                         <i class="zmdi zmdi-face"></i> <span>Profile</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="login.html" target="_blank">
-                        <i class="zmdi zmdi-lock"></i> <span>Login</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="register.html" target="_blank">
-                        <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-header">LABELS</li>
-                <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-                <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-                <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>
-
             </ul>
 
         </div>
@@ -160,17 +150,17 @@
 
                 <ul class="navbar-nav align-items-center right-nav-link">
                     <li class="nav-item dropdown-lg">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="">
                             <i class="fa fa-envelope-open-o"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown-lg">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="">
                             <i class="fa fa-bell-o"></i>
                         </a>
                     </li>
                     <li class="nav-item language">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();"><i class="fa fa-flag"></i></a>
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href=""><i class="fa fa-flag"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-item"> <i class="flag-icon flag-icon-gb mr-2"></i> English</li>
                             <li class="dropdown-item"> <i class="flag-icon flag-icon-fr mr-2"></i> French</li>
@@ -195,11 +185,11 @@
                                 </a>
                             </li>
                             <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+                            <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Notifications</li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
                             <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>
+                            <li class="dropdown-item"><i class="icon-settings mr-2"></i> Settings</li>
                             <li class="dropdown-divider"></li>
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "preview-subject mb-1" }))
                             {
@@ -304,11 +294,21 @@
     <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/dataTables.jqueryui.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    
+   
+    <script src="~/Scripts/main.min.js"></script>
+    <script src="~/Scripts/locales-all.min.js"></script>
     <script>
-        $('.table').DataTable();
+      
+        $('#table').DataTable();
+        $('#table4').DataTable();
+       
 
         $("#frmSubmit").on("click", function () {
-            $
+
         })
     </script>
     @RenderSection("Scripts", false)

@@ -1,7 +1,10 @@
 ﻿@using BugTracker.Models
+@using Microsoft.Owin.Security
+
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     Layout = null;
 }
 
@@ -43,7 +46,7 @@
             <div class="card-body">
                 <div class="card-content p-2">
                     <div class="text-center">
-                        <img src="~/Images/BTLOGO.png" alt="logo icon">
+                        <img src="~/Images/BTSmall.png" style="height:80px; width:80px" alt="logo icon">
                     </div>
                     <div class="card-title text-uppercase text-center py-3">Sign In</div>
 
@@ -82,17 +85,42 @@
                         </div>
                         <p>
                             @Html.ActionLink("Forgot password?", "ForgotPassword")
-
                         </p>
                         <p>
                             @Html.ActionLink("Register as a new user", "Register")
                         </p>
+                        <div class="text-center mt-3">Sign In With</div>
+                        <hr />
+                        
+                        @*<div class="form-row mt-4">
+                            <div class="form-group mb-0 col-6">
+                                <button type="button" class="btn btn-light btn-block"><i class="fa fa-facebook-square"></i> Facebook</button>
+                            </div>
+
+                            </div>*@
+
                     }
+                        @using (Html.BeginForm("ExternalLogin", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div id="socialLoginList">
+                                <p>
+                                    @foreach (AuthenticationDescription p in loginProviders)
+                                    {
+                                        <div class="form-row mt-4">
+                                            <div class="form-group mb-0 col">
+                                                <button type="submit" class="btn btn-light btn-block" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </p>
+                            </div>
+                        }
                 </div>
             </div>
-         
+
             <div class="card-footer text-center py-3">
-                <p class="text-warning mb-0">Wanna demo the program? <a href="@Url.Action("DemoLogin", "Account")"> Demo Sign In</a></p>
+                <p class="text-warning mb-0">Demo the Software-> <a href="@Url.Action("DemoLogin", "Account")"> Demo Sign In</a></p>
             </div>
         </div>
 

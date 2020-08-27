@@ -12,43 +12,70 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+<div class="row">
     <div class="row">
-        <div class="col-6">
-            <h2>Select Users</h2>
-            @Html.ListBox("UserIds")
-        </div>
-        <div class="col-6">
-            @Html.ListBox("ProjectIds")
+        <div class="col" style="color:snow">
+            <div class="form-group">
+                @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-12" style="color:snow">
+                    @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                @Html.Label("ProjectIds", "Projects", htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-12" style="color:snow">
+                    @Html.DropDownList("ProjectIds", null, "--No Project--", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    @*<div class="col">
+            <h4>Select Users</h4>
+            @Html.ListBox("UserIds", null, new { @class = "col-6", style = "color:snow" })
+        </div>
+        <div class="col">
+        <h4>Select Project</h4>
+            @Html.ListBox("ProjectIds", null , new { @class = "col-6", style = "color:snow"})
+        </div>*@
+</div>
+    <br />
     <div class="row">
         <div class="col-md-offset-3 col-md-4">
             <button type="submit" class="btn btn-danger" style="width:250px">Assign Users</button>
         </div>
     </div>
-    <table class="table table-bordered table-light col-md-5">
+    <hr />
+    <table class="table-bordered table-light col-md-12">
         <tr>
-            <th style="color:white">
+            <th>
                 @Html.DisplayName("User Email")
             </th>
-            <th style="color:white">
+            <th>
                 @Html.DisplayName("Project(s)")
             </th>
+            <th></th>
         </tr>
 
         @foreach (var user in Model)
         {
-            <tr>
-                <td style="background-color:dimgray">
-                    @user.Email
-                </td>
-                <td style="background-color:dimgray">
-                    @foreach(var project in projectHelper.ListUserProjects(user.Id))
-                    {
-                        @project.Name<br />
-                    }
-                </td>
-            </tr>
+    <tr>
+        <td style="background-color:dimgray">
+            @user.Email
+        </td>
+        <td style="background-color:dimgray">
+            @foreach (var project in projectHelper.ListUserProjects(user.Id))
+            {
+                @project.Name<br />
+            }
+        </td>
+       
+    </tr>
         }
 
     </table>

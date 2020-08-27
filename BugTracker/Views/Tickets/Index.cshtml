@@ -1,138 +1,140 @@
 ﻿@using Microsoft.AspNet.Identity;
-
+@using BugTracker.Helpers;
 @model IEnumerable<BugTracker.Models.Ticket>
 
 @{
     ViewBag.Title = "Index";
+    var ticketHelper = new TicketHelper();
 }
 
 
-  
-    <div class="main-panel">
 
-        <br />
-        <br />
-        <br />
-        <br />
+<div class="main-panel">
 
-        <h2>Index</h2>
-        <br />
-        <br />
-        @if (User.IsInRole("Submitter"))
-        {
-          
-            <button class="btn btn-primary">
-                @Html.ActionLink("+Create New Ticket", "Create")
-            </button>
+    <br />
+    <br />
+    <br />
+    <br />
 
-        }
-        <br />
-        <br />
+    <h2>All Tickets</h2>
+    <br />
+    <br />
+    @if (User.IsInRole("Submitter"))
+    {
 
-       
-        <table id="table" class="table-sm table-bordered table-light col-md-12">
-            <thead>
+        <button class="btn btn-primary">
+            @Html.ActionLink("+Create New Ticket", "Create")
+        </button>
+
+    }
+    <br />
+    <br />
+
+
+    <table id="table1" class="table table-bordered table-light col-md-8">
+        <thead>
+            <tr>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Submitter
+                </th>
+                <th>
+                    Developer
+                </th>
+                <th>
+                    Issue
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Created)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Updated)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsResolved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsArchived)
+                </th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        Project
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Priority
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th>
-                        Submitter
-                    </th>
-                    <th>
-                        Developer
-                    </th>
-                    <th>
-                        Issue
-                    </th>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Project.Name)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.TicketType.Name)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Submitter.FullName)
+                    </td>
+                    @*@if (item.DeveloperId != null)
+                        {*@
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Developer.FullName)
+                    </td>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Created)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Updated)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsResolved)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsArchived)
-                    </th>
-                   <th></th>
-                </tr>
-
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.Project.Name)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.TicketType.Name)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.Submitter.FullName)
-                        </td>
-                        @*@if (item.DeveloperId != null)*@
-                        @*{*@
-                            <td style="background-color:dimgray">
-                                @Html.DisplayFor(modelItem => item.Developer.FullName)
-                            </td>
-
-                        @*}
+                    @*}
                         else
                         {
                             <span>No Dev</span>
                         }*@
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.Issue)
-                        </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Issue)
+                    </td>
 
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.Created)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.Updated)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.IsResolved)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.DisplayFor(modelItem => item.IsArchived)
-                        </td>
-                        <td style="background-color:dimgray">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.Updated)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.IsResolved)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.DisplayFor(modelItem => item.IsArchived)
+                    </td>
+                    <td style="background-color:dimgray">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
 
-                        </td>
-                    </tr>
-                }
-            </tbody>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
-        </table>
+    </table>
 
-        @if (User.IsInRole("Developer"))
-        {
-            <table class="table table-bordered table-light col-4 offset-3">
-                <thead>
+
+    @if (User.IsInRole("Developer"))
+    {
+        <table id="table3" class="table table-bordered table-light col-md-8">
+            <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Project.Name)
@@ -172,9 +174,10 @@
                     </th>
                     <th></th>
                 </tr>
-                </thead>
-                @foreach (var item in Model.Where(t => t.DeveloperId == User.Identity.GetUserId()))
-                {   <tbody>
+            </thead>
+            @foreach (var item in Model.Where(t => t.DeveloperId == User.Identity.GetUserId()))
+            {
+                <tbody>
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Project.Name)
@@ -219,12 +222,110 @@
                         </td>
                     </tr>
                 </tbody>
-                }
+            }
 
-            </table>
+        </table>
 
 
+    }
+
+
+</div>
+
+<br />
+<hr />
+<h2>My Tickets</h2>
+<br />
+<br />
+
+<table id="table2" class="table table-bordered table-light col-md-8">
+    <thead>
+        <tr>
+            <th>
+                Project
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Issue
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsResolved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsArchived)
+            </th>
+            <th></th>
+
+
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var item in ticketHelper.GetMyTickets())
+        {
+        <tr>
+            <td style="background-color:dimgray">
+                @item.Project.Name
+            </td>
+            <td style="background-color:dimgray">
+                @item.TicketType.Name
+            </td>
+            <td style="background-color:dimgray">
+                @item.TicketPriority.Name
+            </td>
+            <td style="background-color:dimgray">
+                @item.TicketStatus.Name
+            </td>
+            <td style="background-color:dimgray">
+                @item.Issue
+            </td>
+
+            <td style="background-color:dimgray">
+                @item.Created
+            </td>
+            <td style="background-color:dimgray">
+                @item.Updated
+            </td>
+            <td style="background-color:dimgray">
+                @item.IsResolved
+            </td>
+            <td style="background-color:dimgray">
+                @item.IsArchived
+            </td>
+            <td style="background-color:dimgray">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
+
+            </td>
+
+
+
+        </tr>
         }
+    </tbody>
 
-
-    </div>
+</table>
+@section scripts{
+    
+<script>
+    $('#table1').DataTable({ "scrollX": true });
+    $('#table2').DataTable({ "scrollX": true });
+    $('#table3').DataTable({ "scrollX": true });
+</script>
+    }

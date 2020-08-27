@@ -1,9 +1,11 @@
 ﻿@using BugTracker.Helpers
+@using Microsoft.Owin.Security
 @model BugTracker.Models.ExtendedRegisterViewModel
 
 
 @{
     ViewBag.Title = "Register";
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     Layout = null;
 }
 
@@ -38,14 +40,14 @@
     <link href="~/Content/app-style.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-theme bg-theme1">
     <div id="wrapper">
 
         <div class="card card-authentication1 mx-auto my-4">
             <div class="card-body">
                 <div class="card-content p-2">
                     <div class="text-center">
-                        <img src="~/Images/BTLOGOSM.png" alt="logo icon">
+                        <img src="~/Images/BTSmall.png" style="height:80px; width:80px" alt="logo icon">
                     </div>
                     <div class="card-title text-uppercase text-center py-3">Sign Up</div>
 
@@ -54,7 +56,7 @@
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
-                        <h4>Create a new account.</h4>
+
                         <hr />
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email, new { @class = "text-left" })
@@ -91,77 +93,93 @@
                                 <input type="submit" class="btn btn-primary btn-block enter-btn" value="Register" />
                             </div>
                         </div>
-                        <p>
-                            @Html.ActionLink("Already have an account? - Sign In", "Login")
-                        </p>
+                        <div class="text-center mt-3">Sign Up With</div>
+                        <hr />
                     }
+                        @using (Html.BeginForm("ExternalLogin", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div id="socialLoginList">
+                                <p>
+                                    @foreach (AuthenticationDescription p in loginProviders)
+                                    {
+                                        <div class="form-row mt-4">
+                                            <div class="form-group mb-0 col">
+                                                <button type="submit" class="btn btn-light btn-block" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </p>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <p class="text-warning mb-0">Already have an account? <a href="@Url.Action("Login", "Account")"> Sign In here</a></p>
                 </div>
             </div>
-            <div class="card-footer text-center py-3">
-                <p class="text-warning mb-0">Already have an account? <a href="login.html"> Sign In here</a></p>
+
+            <!--Start Back To Top Button-->
+            <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+            <!--End Back To Top Button-->
+            <!--start color switcher-->
+            <div class="right-sidebar">
+                <div class="switcher-icon">
+                    <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+                </div>
+                <div class="right-sidebar-content">
+
+                    <p class="mb-0">Gaussion Texture</p>
+                    <hr>
+
+                    <ul class="switcher">
+                        <li id="theme1"></li>
+                        <li id="theme2"></li>
+                        <li id="theme3"></li>
+                        <li id="theme4"></li>
+                        <li id="theme5"></li>
+                        <li id="theme6"></li>
+                    </ul>
+
+                    <p class="mb-0">Gradient Background</p>
+                    <hr>
+
+                    <ul class="switcher">
+                        <li id="theme7"></li>
+                        <li id="theme8"></li>
+                        <li id="theme9"></li>
+                        <li id="theme10"></li>
+                        <li id="theme11"></li>
+                        <li id="theme12"></li>
+                        <li id="theme13"></li>
+                        <li id="theme14"></li>
+                        <li id="theme15"></li>
+                    </ul>
+
+                </div>
             </div>
-        </div>
+            <!--end color switcher-->
 
-        <!--Start Back To Top Button-->
-        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-        <!--End Back To Top Button-->
-        <!--start color switcher-->
-        <div class="right-sidebar">
-            <div class="switcher-icon">
-                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
-            </div>
-            <div class="right-sidebar-content">
+        </div><!--wrapper-->
+        <!-- Bootstrap core JavaScript-->
+        <script src="~/Scripts/jquery.min.js"></script>
+        <script src="~/Scripts/popper.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <!-- simplebar js -->
+        <script src="~/Scripts/simplebar.js"></script>
+        <!-- sidebar-menu js -->
+        <script src="~/Scripts/sidebar-menu.js"></script>
+        <!-- loader scripts -->
+        @*<script src="assets/js/jquery.loading-indicator.js"></script>*@
+        <!-- Custom scripts -->
+        <script src="~/Scripts/app-script.js"></script>
+        <!-- Chart js -->
+        <script src="~/Scripts/Chart.min.js"></script>
+        <!-- Index js -->
+        <script src="~/Scripts/index.js"></script>
 
-                <p class="mb-0">Gaussion Texture</p>
-                <hr>
-
-                <ul class="switcher">
-                    <li id="theme1"></li>
-                    <li id="theme2"></li>
-                    <li id="theme3"></li>
-                    <li id="theme4"></li>
-                    <li id="theme5"></li>
-                    <li id="theme6"></li>
-                </ul>
-
-                <p class="mb-0">Gradient Background</p>
-                <hr>
-
-                <ul class="switcher">
-                    <li id="theme7"></li>
-                    <li id="theme8"></li>
-                    <li id="theme9"></li>
-                    <li id="theme10"></li>
-                    <li id="theme11"></li>
-                    <li id="theme12"></li>
-                    <li id="theme13"></li>
-                    <li id="theme14"></li>
-                    <li id="theme15"></li>
-                </ul>
-
-            </div>
-        </div>
-        <!--end color switcher-->
-
-    </div><!--wrapper-->
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/Scripts/jquery.min.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <!-- simplebar js -->
-    <script src="~/Scripts/simplebar.js"></script>
-    <!-- sidebar-menu js -->
-    <script src="~/Scripts/sidebar-menu.js"></script>
-    <!-- loader scripts -->
-    @*<script src="assets/js/jquery.loading-indicator.js"></script>*@
-    <!-- Custom scripts -->
-    <script src="~/Scripts/app-script.js"></script>
-    <!-- Chart js -->
-    <script src="~/Scripts/Chart.min.js"></script>
-    <!-- Index js -->
-    <script src="~/Scripts/index.js"></script>
-
-</body>
+    </body>
 </html>
 
 

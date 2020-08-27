@@ -9,7 +9,8 @@ using System.Web.Mvc;
 using BugTracker.Models;
 
 namespace BugTracker.Controllers
-{
+{ 
+    [RequireHttps]
     public class TicketTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

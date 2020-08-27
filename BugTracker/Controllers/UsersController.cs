@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,6 +19,7 @@ namespace BugTracker.Controllers
         {
             return View(db.Users.ToList());
         }
+
         public ActionResult ManageUserRole(string id)
         {
             var userRole = roleHelper.ListUserRoles(id).FirstOrDefault();
@@ -28,6 +30,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult ManageUserRole(string id, string roleName)
         {
             foreach (var role in roleHelper.ListUserRoles(id))

@@ -10,6 +10,7 @@ using BugTracker.Models;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
     public class TicketPrioritiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

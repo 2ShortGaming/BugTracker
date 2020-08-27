@@ -12,6 +12,15 @@ namespace BugTracker.Models
         public string Email { get; set; }
     }
 
+    public class CustomExternalRegister: ExternalLoginConfirmationViewModel
+    {
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+    }
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }

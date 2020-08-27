@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -35,6 +36,10 @@ namespace BugTracker.Controllers
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
             return PartialView(user);
+        }
+        public ActionResult Calendar()
+        {
+            return View();
         }
     }
 }

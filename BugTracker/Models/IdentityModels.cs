@@ -74,12 +74,12 @@ namespace BugTracker.Models
 
         public DbSet<Ticket> Tickets { get; set; }
 
-        public System.Data.Entity.DbSet<BugTracker.Models.TicketComment> TicketComments { get; set; }
+        public DbSet<TicketComment> TicketComments { get; set; }
 
-        public System.Data.Entity.DbSet<BugTracker.Models.TicketNotification> TicketNotifications { get; set; }
+        public DbSet<TicketNotification> TicketNotifications { get; set; }
 
-        public System.Data.Entity.DbSet<BugTracker.Models.TicketAttachment> TicketAttachments { get; set; }
+        public DbSet<TicketAttachment> TicketAttachments { get; set; }
 
-        public System.Data.Entity.DbSet<BugTracker.Models.TicketHistory> TicketHistories { get; set; }
+        public DbSet<TicketHistory> TicketHistories { get; set; }
     }
 }
