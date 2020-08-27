@@ -65,10 +65,10 @@
         @foreach (var user in Model)
         {
     <tr>
-        <td style="background-color:dimgray">
+        <td style="background-color:chocolate">
             @user.Email
         </td>
-        <td style="background-color:dimgray">
+        <td style="background-color:chocolate">
             @foreach (var project in projectHelper.ListUserProjects(user.Id))
             {
                 @project.Name<br />

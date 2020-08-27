@@ -82,16 +82,11 @@ namespace BugTracker.Helpers
                 case "Admin":
                     return db.Projects.ToList();
                 case "Project Manager":
-                    var projectList = new List<Project>();
-                    foreach (var project in ListUserProjects(userId).ToList())
-                    {
-                        projectList.AddRange(db.Projects.ToList());
-                    }
-                    return projectList;
+                   
                 case "Developer":
-                    return db.Projects.Where(t => t.DeveloperId == userId).ToList();
+         
                 case "Submitter":
-                    return db.Projects.Where(t => t.SubmitterId == userId).ToList();
+                    return ListUserProjects(userId).ToList();
                 default:
                     return null;
             }

@@ -68,7 +68,7 @@ $(function () {
 
 	 // theme setting
 	 $(".switcher-icon").on("click", function(e) {
-        e.preventDefault();
+         e.preventDefault();
         $(".right-sidebar").toggleClass("right-toggled");
     });
 	

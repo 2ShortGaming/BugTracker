@@ -82,16 +82,16 @@
         @foreach (var project in Model)
         {
             <tr>
-                <td style="background-color:dimgray">
+                <td style="background-color:chocolate">
                     @project.Name
                 </td>
-                <td style="background-color:dimgray">
+                <td style="background-color:chocolate">
                     @foreach (var user in projectHelper.ListUsersOnProject(project.Id))
                     {
                         @user.FullName <br />
                     }
                 </td>
-                <td style="background-color:dimgray">
+                <td style="background-color:chocolate">
                     @Html.ActionLink("Edit", "Edit", new { id = project.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = project.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = project.Id })

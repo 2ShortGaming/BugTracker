@@ -143,12 +143,11 @@ namespace BugTracker.Helpers
                     UserId = newTicket.DeveloperId,
                     Created = DateTime.Now,
                     TicketId = newTicket.Id,
-                    Message = /*"You have been assigned Ticket Id: {newTicket.Id}",*/ $"Heads up {newTicket.Developer.FullName}, you have been assigned to Ticket Id: {newTicket.Id} on Project {newTicket.Project.Name} "
+                    Message = $"Heads up {newTicket.Developer.FullName}, you have been assigned to Ticket Id: {newTicket.Id} on Project {newTicket.Project.Name} "
                     //Body = $"Heads up {newTicket.Developer.FullName}, you have been assigned to Ticket Id: {newTicket.Id} titled '{newTicket.Title}' on Project {newTicket.Project.Name} "
                 };
                 db.TicketNotifications.Add(newNotification);
                 db.SaveChanges();
-
             }
         }
         public List<Ticket> GetAllProjectTicketsForUser(string userId)

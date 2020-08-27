@@ -96,13 +96,13 @@
             @foreach (var attachment in Model.Attachments.ToList())
             {
                 <tr>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         <img  src="@FileHelper.GetIcon(Path.GetExtension(attachment.FilePath))" class="img-thumbnail" style="height:30px;"/>
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => attachment.FileName)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         <a target="_blank" href="@attachment.FilePath">@attachment.FilePath</a>
 
                     </td>
@@ -206,19 +206,19 @@
                     {
                         <tbody>
                             <tr>
-                                <td style="background-color:dimgray">
+                                <td style="background-color:chocolate">
                                     @Html.DisplayFor(modelItem => item.User.FirstName)
                                 </td>
-                                <td style="background-color:dimgray">
+                                <td style="background-color:chocolate">
                                     @Html.DisplayFor(modelItem => item.Property)
                                 </td>
-                                <td style="background-color:dimgray">
+                                <td style="background-color:chocolate">
                                     @Html.DisplayFor(modelItem => item.OldValue)
                                 </td>
-                                <td style="background-color:dimgray">
+                                <td style="background-color:chocolate">
                                     @Html.DisplayFor(modelItem => item.NewValue)
                                 </td>
-                                <td style="background-color:dimgray">
+                                <td style="background-color:chocolate">
                                     @Html.DisplayFor(modelItem => item.ChangedOn)
                                 </td>
                             </tr>

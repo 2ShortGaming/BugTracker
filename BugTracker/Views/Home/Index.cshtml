@@ -105,16 +105,16 @@
                                 @foreach (var item in ticketHelper.GetMyTickets())
                                 {
                                     <tr>
-                                        <td style="background-color:dimgray">
+                                        <td style="background-color:chocolate">
                                            @item.Project.Name
                                         </td>
-                                        <td style="background-color:dimgray">
+                                        <td style="background-color:chocolate">
                                             @item.TicketType.Name
                                         </td>
-                                        <td style="background-color:dimgray">
+                                        <td style="background-color:chocolate">
                                             @item.TicketPriority.Name
                                         </td>
-                                        <td style="background-color:dimgray">
+                                        <td style="background-color:chocolate">
                                             @item.TicketStatus.Name
                                         </td>
                                     </tr>
@@ -193,7 +193,7 @@
                                 @foreach (var project in projectHelper.GetMyProjects())
                                 {
                                     <tr>
-                                        <td style="background-color:">
+                                        <td style="background-color:chocolate">
                                             @project.Name
                                         </td>
                                       
@@ -318,6 +318,7 @@
                                  ykeys: ['value'],
                                  // Labels for the ykeys -- will be displayed when you hover over the
                                  // chart.
+                                
                                  labels: ['Value']
                              });
                          },
@@ -345,6 +346,7 @@
                                  ykeys: ['value'],
                                  // Labels for the ykeys -- will be displayed when you hover over the
                                  // chart.
+                             
                                  labels: ['Value']
                              });
                          },

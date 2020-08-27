@@ -77,49 +77,49 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.Project.Name)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.TicketType.Name)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.TicketPriority.Name)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.TicketStatus.Name)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.Submitter.FullName)
                     </td>
-                    @*@if (item.DeveloperId != null)
-                        {*@
-                    <td style="background-color:dimgray">
-                        @Html.DisplayFor(modelItem => item.Developer.FullName)
-                    </td>
+                    @if (item.DeveloperId != null)
+                    {
+                        <td style="background-color:chocolate">
+                            @Html.DisplayFor(modelItem => item.Developer.FullName)
+                        </td>
 
-                    @*}
-                        else
-                        {
-                            <span>No Dev</span>
-                        }*@
-                    <td style="background-color:dimgray">
+                    }
+                    else
+                    {
+                        <td style="background-color:chocolate">No Dev</td>
+                    }
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.Issue)
                     </td>
 
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.Created)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.Updated)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.IsResolved)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.DisplayFor(modelItem => item.IsArchived)
                     </td>
-                    <td style="background-color:dimgray">
+                    <td style="background-color:chocolate">
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                         @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
 
@@ -279,53 +279,53 @@
 
         @foreach (var item in ticketHelper.GetMyTickets())
         {
-        <tr>
-            <td style="background-color:dimgray">
-                @item.Project.Name
-            </td>
-            <td style="background-color:dimgray">
-                @item.TicketType.Name
-            </td>
-            <td style="background-color:dimgray">
-                @item.TicketPriority.Name
-            </td>
-            <td style="background-color:dimgray">
-                @item.TicketStatus.Name
-            </td>
-            <td style="background-color:dimgray">
-                @item.Issue
-            </td>
+            <tr>
+                <td style="background-color:chocolate">
+                    @item.Project.Name
+                </td>
+                <td style="background-color:chocolate">
+                    @item.TicketType.Name
+                </td>
+                <td style="background-color:chocolate">
+                    @item.TicketPriority.Name
+                </td>
+                <td style="background-color:chocolate">
+                    @item.TicketStatus.Name
+                </td>
+                <td style="background-color:chocolate">
+                    @item.Issue
+                </td>
 
-            <td style="background-color:dimgray">
-                @item.Created
-            </td>
-            <td style="background-color:dimgray">
-                @item.Updated
-            </td>
-            <td style="background-color:dimgray">
-                @item.IsResolved
-            </td>
-            <td style="background-color:dimgray">
-                @item.IsArchived
-            </td>
-            <td style="background-color:dimgray">
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
+                <td style="background-color:chocolate">
+                    @item.Created
+                </td>
+                <td style="background-color:chocolate">
+                    @item.Updated
+                </td>
+                <td style="background-color:chocolate">
+                    @item.IsResolved
+                </td>
+                <td style="background-color:chocolate">
+                    @item.IsArchived
+                </td>
+                <td style="background-color:chocolate">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
 
-            </td>
+                </td>
 
 
 
-        </tr>
+            </tr>
         }
     </tbody>
 
 </table>
 @section scripts{
-    
-<script>
-    $('#table1').DataTable({ "scrollX": true });
-    $('#table2').DataTable({ "scrollX": true });
-    $('#table3').DataTable({ "scrollX": true });
-</script>
-    }
+
+    <script>
+        $('#table1').DataTable({ "scrollX": true });
+        $('#table2').DataTable({ "scrollX": true });
+        $('#table3').DataTable({ "scrollX": true });
+    </script>
+}

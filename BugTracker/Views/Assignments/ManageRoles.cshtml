@@ -70,10 +70,10 @@
                 @foreach (var person in Model)
                 {
                     <tr>
-                        <td style="background-color:dimgray">
+                        <td style="background-color:chocolate">
                             @person.Email
                         </td>
-                        <td style="background-color:dimgray">
+                        <td style="background-color:chocolate">
                             @roleHelper.ListUserRoles(person.Id).FirstOrDefault()
                         </td>
                     </tr>
