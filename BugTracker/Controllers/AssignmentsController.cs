@@ -60,6 +60,7 @@ namespace BugTracker.Controllers
         
         public ActionResult ManageUserRole()
         {
+            ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
             return View();
         }
         #endregion

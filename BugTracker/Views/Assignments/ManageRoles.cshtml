@@ -30,7 +30,7 @@
                 <div class="form-group">
                     @Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-6" })
                     <div class="col-md-12" style="color:snow">
-                        @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control", style = "height:275px"})
                     </div>
                 </div>
             </div>
@@ -70,10 +70,10 @@
                 @foreach (var person in Model)
                 {
                     <tr>
-                        <td style="background-color:chocolate">
+                        <td style="background-color:dimgray">
                             @person.Email
                         </td>
-                        <td style="background-color:chocolate">
+                        <td style="background-color:dimgray">
                             @roleHelper.ListUserRoles(person.Id).FirstOrDefault()
                         </td>
                     </tr>

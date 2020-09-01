@@ -9,6 +9,9 @@
     var projectHelper = new ProjectHelper();
     var historyHelper = new HistoryHelper();
     var ticketHelper = new TicketHelper();
+    var notificationHelper = new NotificationHelper();
+    var notifications = notificationHelper.ListUsersNotifications(User.Identity.GetUserId());
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -122,11 +125,11 @@
                         </a>
                     </li>*@
 
-                <li>
+                @*<li>
                     <a href=@Url.Action("About", "Home")>
                         <i class="zmdi zmdi-face"></i> <span>Profile</span>
                     </a>
-                </li>
+                </li>*@
             </ul>
 
         </div>
@@ -140,34 +143,16 @@
                             <i class="icon-menu menu-icon"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <form class="search-bar">
-                            <input type="text" class="form-control" placeholder="Enter keywords">
-                            <a href="#"><i class="icon-magnifier"></i></a>
-                        </form>
-                    </li>
+                    @*<li class="nav-item">
+                            <form class="search-bar">
+                                <input type="text" class="form-control" placeholder="Enter keywords">
+                                <a href="#"><i class="icon-magnifier"></i></a>
+                            </form>
+                        </li>*@
                 </ul>
-
                 <ul class="navbar-nav align-items-center right-nav-link">
-                    <li class="nav-item dropdown-lg">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="">
-                            <i class="fa fa-envelope-open-o"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown-lg">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="">
-                            <i class="fa fa-bell-o"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item language">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href=""><i class="fa fa-flag"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item"> <i class="flag-icon flag-icon-gb mr-2"></i> English</li>
-                            <li class="dropdown-item"> <i class="flag-icon flag-icon-fr mr-2"></i> French</li>
-                            <li class="dropdown-item"> <i class="flag-icon flag-icon-cn mr-2"></i> Chinese</li>
-                            <li class="dropdown-item"> <i class="flag-icon flag-icon-de mr-2"></i> German</li>
-                        </ul>
-                    </li>
+                   
+
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
                             <span class="user-profile"><img src=@userHelper.GetAvatarPath() class="img-circle" alt="user avatar"></span>
@@ -186,10 +171,6 @@
                             </li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Notifications</li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-settings mr-2"></i> Settings</li>
                             <li class="dropdown-divider"></li>
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "preview-subject mb-1" }))
                             {
@@ -224,7 +205,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="text-center">
-                    Copyright © 2018 Dashtreme Admin and Modified by Brandon Swaney
+                    Copyright © 2018 Dashtreme Admin and Modified by <a href="https://swaney-portfolio-cf-trn.netlify.app/" target="_blank">Brandon Swaney</a>
                 </div>
             </div>
         </footer>
@@ -235,7 +216,7 @@
                 <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
             </div>
             <div class="right-sidebar-content">
-
+                <p class="mb-0">Demo Themes</p>
                 <p class="mb-0">Gaussion Texture</p>
                 <hr>
 
@@ -297,16 +278,16 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    
-   
+
+
     <script src="~/Scripts/main.min.js"></script>
     <script src="~/Scripts/locales-all.min.js"></script>
     <script>
-      
+
         $('#table').DataTable();
         $('#table4').DataTable();
-       
-
+        $('#table5').DataTable();
+        $('#table6').DataTable();
         $("#frmSubmit").on("click", function () {
 
         })

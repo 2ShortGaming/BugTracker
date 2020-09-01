@@ -91,7 +91,11 @@ namespace BugTracker.Helpers
                     return null;
             }
         }
-
+      public List<Project> AllProjects()
+        {
+            var projectList = db.Projects.ToList();
+            return projectList;
+        }
 
     }
 }      

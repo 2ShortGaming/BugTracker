@@ -27,7 +27,7 @@ namespace BugTracker.Helpers
                     return (user.Projects.SelectMany(p => p.Tickets).Any(t => t.Id == ticketId));
                 case "Developer":
                 case "Submitter":
-                    if(ticket.DeveloperId == userId || ticket.SubmitterId == userId)
+                    if (ticket.DeveloperId == userId || ticket.SubmitterId == userId)
                     {
                         return true;
                     }
@@ -124,6 +124,31 @@ namespace BugTracker.Helpers
             }
         }
 
+        public bool MyTicket(int id)
+        {
+            var allowed = false;
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var ticket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == id);
+            var userRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (userRole)
+            {
+                case "Admin":
+                    allowed = true;
+                    break;
+                case"Developer":
+                        allowed = ticket.DeveloperId == userId ? true : false;
+                    break;
+
+                case "Submitter":
+                    allowed = ticket.SubmitterId == userId ? true : false;
+                    break;
+                case "Project Manager":
+                    var user = db.Users.Find(userId);
+                   allowed = user.Projects.SelectMany(p => p.Tickets).Select(t => t.Id).Contains(id);
+                    break;
+            }
+            return allowed;
+        }
         public List<ApplicationUser> ListTicketUsers(int TicketId)
         {
             var UserList = new List<ApplicationUser>();
@@ -150,11 +175,22 @@ namespace BugTracker.Helpers
                 db.SaveChanges();
             }
         }
+
+
         public List<Ticket> GetAllProjectTicketsForUser(string userId)
         {
             var user = db.Users.Find(userId);
             var ticketList = new List<Ticket>();
             return user.Projects.SelectMany(p => p.Tickets).ToList();
+        }
+
+        public List<Ticket> GetProjectTickets()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var ticketList = new List<Ticket>();
+            ticketList = user.Projects.SelectMany(p => p.Tickets).ToList();
+            return ticketList;
         }
 
     }

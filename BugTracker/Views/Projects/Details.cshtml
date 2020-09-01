@@ -1,14 +1,21 @@
-﻿@model BugTracker.Models.Project
+﻿@using BugTracker.Helpers;
+
+@model BugTracker.Models.Project
 
 @{
     ViewBag.Title = "Details";
-}
+    var ticketHelper = new TicketHelper();
+    var projectHelper = new ProjectHelper();
 
-<h2>Details</h2>
+}
+<br />
+<br />
+
+<h2>Project Details</h2>
 
 <div>
-    <h4>Project</h4>
-    This project has @Model.Tickets.Count tickets 
+
+    This project has @Model.Tickets.Count tickets
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsArchived)
+            Archived
         </dt>
 
         <dd>
@@ -54,48 +61,137 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.Hidden("ProjectId", Model.Id)
 
-            
+
 
             <div class="form-group">
-                @Html.Label("Ticket Type", "TicketTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
+                @Html.Label("TicketTypeId", "Ticket Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
                     @Html.DropDownList("TicketTypeId", null, "--Ticket Type--", htmlAttributes: new { @class = "form-control", style = "color:snow" })
-                   
+
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.Label("Ticket Priority", "TicketPriorityId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
+                @Html.Label("TicketPriorityId", "Ticket Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
                     @Html.DropDownList("TicketPriorityId", null, "--Ticket Priority--", htmlAttributes: new { @class = "form-control", style = "color:snow" })
-                  
+
                 </div>
             </div>
             <div class="form-group">
                 @Html.Label("Issue", "Issue", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
+                <div class="col-md-8">
                     @Html.Editor("Issue", new { htmlAttributes = new { @class = "form-control", style = "color:snow" } })
-                   
+
                 </div>
             </div>
-
             <div class="form-group">
-                @Html.Label("IssueDescription", "IssueDescription", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
-                    @Html.TextArea("IssueDescription", new { htmlAttributes = new { @class = "form-control" } })
-                    
+                @Html.Label("Issue Description", htmlAttributes: new { @class = "control-label col-md-8" })
+                <div class="col-md-8">
+                    @Html.TextArea("IssueDescription", new { @class = "form-control", @rows = "5" })
                 </div>
             </div>
-
+            @*<div class="form-group">
+                @Html.Label("IssueDescription", "Issue Description", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.Editor("IssueDescription", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("IssueDescription", "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+            <br />
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
+                <div class="col-md-offset-2 col-md-8">
                     <input type="submit" value="Create" class="btn btn-primary btn-block enter-btn" />
                 </div>
             </div>
         </div>
     }
 }
+<hr />
+<table id="table2" class="table table-bordered table-light col-md-8">
+    <thead>
+        <tr>
+            <th>
+                Project
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Issue
+            </th>
 
+            <th>
+                Created
+            </th>
+            <th>
+                Updated
+            </th>
+            <th>
+                Resolved
+            </th>
+            <th>
+                Archived
+            </th>
+            <th></th>
+
+
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var item in ticketHelper.GetProjectTickets())
+        {
+
+            <tr>
+                <td style="background-color:dimgray">
+                    @item.Project.Name
+                </td>
+                <td style="background-color:dimgray">
+                    @item.TicketType.Name
+                </td>
+                <td style="background-color:dimgray">
+                    @item.TicketPriority.Name
+                </td>
+                <td style="background-color:dimgray">
+                    @item.TicketStatus.Name
+                </td>
+                <td style="background-color:dimgray">
+                    @item.Issue
+                </td>
+
+                <td style="background-color:dimgray">
+                    @item.Created
+                </td>
+                <td style="background-color:dimgray">
+                    @item.Updated
+                </td>
+                <td style="background-color:dimgray">
+                    @item.IsResolved
+                </td>
+                <td style="background-color:dimgray">
+                    @item.IsArchived
+                </td>
+                <td style="background-color:dimgray">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Dashboard", new { id = item.Id })
+
+                </td>
+
+
+
+            </tr>
+        }
+    </tbody>
+
+</table>
 
 <hr />
 
@@ -103,3 +199,24 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+@section scripts{
+    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            tinymce.init({
+                selector: '#IssueDescription'
+            });
+
+        });
+    </script>
+
+    <script>
+        $('#table2').DataTable({ "scrollX": true });
+
+    </script>
+
+
+
+}

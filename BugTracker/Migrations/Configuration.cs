@@ -75,8 +75,8 @@ namespace BugTracker.Migrations
                 {
                     Email = "DemoAdmin@mailinator.com",
                     UserName = "DemoAdmin@mailinator.com",
-                    FirstName = "Demo",
-                    LastName = "Admin",
+                    FirstName = "Jeff",
+                    LastName = "Cannon",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "DemoPassword");
                 var userId = userManager.FindByEmail("DemoAdmin@mailinator.com").Id;
@@ -90,8 +90,8 @@ namespace BugTracker.Migrations
                 {
                     Email = "DemoPM@mailinator.com",
                     UserName = "DemoPM@mailinator.com",
-                    FirstName = "Demo",
-                    LastName = "PM",
+                    FirstName = "Bob",
+                    LastName = "Hogan",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "DemoPassword");
                 var userId = userManager.FindByEmail("DemoPM@mailinator.com").Id;
@@ -106,8 +106,8 @@ namespace BugTracker.Migrations
                 {
                     Email = "DemoDev@mailinator.com",
                     UserName = "DemoDev@mailinator.com",
-                    FirstName = "Demo",
-                    LastName = "Dev",
+                    FirstName = "Janice",
+                    LastName = "Prevo",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "DemoPassword");
                 var userId = userManager.FindByEmail("DemoDev@mailinator.com").Id;
@@ -121,8 +121,8 @@ namespace BugTracker.Migrations
                 {
                     Email = "DemoSub@mailinator.com",
                     UserName = "DemoSub@mailinator.com",
-                    FirstName = "Demo",
-                    LastName = "Sub",
+                    FirstName = "Shane",
+                    LastName = "Allred",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "DemoPassword");
                 var userId = userManager.FindByEmail("DemoSub@mailinator.com").Id;
@@ -151,8 +151,8 @@ namespace BugTracker.Migrations
                 {
                     Email = "jg@mailinator.com",
                     UserName = "jg@mailinator.com",
-                    FirstName = "Jim",
-                    LastName = "Gordon",
+                    FirstName = "Jimmy",
+                    LastName = "Grant",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "Abc&123!");
 
@@ -167,7 +167,7 @@ namespace BugTracker.Migrations
                     Email = "dev@mailinator.com",
                     UserName = "dev@mailinator.com",
                     FirstName = "Harvey",
-                    LastName = "Dent",
+                    LastName = "Denton",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "Abc&123!");
 
@@ -196,7 +196,7 @@ namespace BugTracker.Migrations
                 {
                     Email = "dg@mailinator.com",
                     UserName = "dg@mailinator.com",
-                    FirstName = "Dick",
+                    FirstName = "Dicky",
                     LastName = "Grayson",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "Abc&123!");
@@ -212,7 +212,7 @@ namespace BugTracker.Migrations
                     Email = "bw@mailinator.com",
                     UserName = "bw@mailinator.com",
                     FirstName = "Bruce",
-                    LastName = "Wayne",
+                    LastName = "Wade",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "Abc&123!");
 
@@ -242,7 +242,7 @@ namespace BugTracker.Migrations
                     Email = "sk@mailinator.com",
                     UserName = "sk@mailinator.com",
                     FirstName = "Selena",
-                    LastName = "Kyle",
+                    LastName = "Kylie",
                     AvatarPath = "/Avatars/default_avatar.png",
                 }, "Abc&123!");
 
@@ -288,14 +288,14 @@ namespace BugTracker.Migrations
             #region Project Seed
             context.Projects.AddOrUpdate(
                 p => p.Name,
-                new Project() { Name = "Seed 1", Created = DateTime.Now.AddDays(-60), IsArchived = true },
-                new Project() { Name = "Seed 2", Created = DateTime.Now.AddDays(-45) },
-                new Project() { Name = "Seed 3", Created = DateTime.Now.AddDays(-30) },
-                new Project() { Name = "Seed 4", Created = DateTime.Now.AddDays(-15) },
-                new Project() { Name = "Seed 5", Created = DateTime.Now.AddDays(-7) },
-                new Project() { Name = "Seed 6", Created = DateTime.Now.AddDays(-7) },
-                new Project() { Name = "Seed 7", Created = DateTime.Now.AddDays(-7) },
-                new Project() { Name = "Seed 8", Created = DateTime.Now.AddDays(-7) }
+                new Project() { Name = "Tech", Created = DateTime.Now.AddDays(-60), IsArchived = true },
+                new Project() { Name = "Knights", Created = DateTime.Now.AddDays(-45) },
+                new Project() { Name = "Godfree", Created = DateTime.Now.AddDays(-30) },
+                new Project() { Name = "Scenery", Created = DateTime.Now.AddDays(-15) },
+                new Project() { Name = "Giveaway", Created = DateTime.Now.AddDays(-7) },
+                new Project() { Name = "Lockdown", Created = DateTime.Now.AddDays(-7) },
+                new Project() { Name = "Umbrella", Created = DateTime.Now.AddDays(-7) },
+                new Project() { Name = "Justice", Created = DateTime.Now.AddDays(-7) }
              
                 );
             #endregion
@@ -396,7 +396,16 @@ namespace BugTracker.Migrations
             context.SaveChanges();
             #endregion
 
+            //#region Notifications Seed
+            //List<Notification> notifications = new List<Notification>();
+            //projectManagers.AddRange(roleHelper.UsersInRole("Project Manager"));
+            //developers.AddRange(roleHelper.UsersInRole("Developer"));
+            //submitters.AddRange(roleHelper.UsersInRole("Submitter"));
+            //foreach(var notification in context.Notification)
 
+
+            //#endregion
+            //context.SaveChanges();
         }
     }
 }

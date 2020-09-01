@@ -77,6 +77,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Avatar Image Upload</label>
+                                <input name="Avatar" type="file" class="form-control col-md-12" id="fileUpload" />
+                                @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             @Html.LabelFor(m => m.Password, new { @class = "text-left" })
                             <div class="col-md-12">
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -96,29 +103,33 @@
                         <div class="text-center mt-3">Sign Up With</div>
                         <hr />
                     }
-                        @using (Html.BeginForm("ExternalLogin", "Account"))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div id="socialLoginList">
-                                <p>
-                                    @foreach (AuthenticationDescription p in loginProviders)
-                                    {
-                                        <div class="form-row mt-4">
-                                            <div class="form-group mb-0 col">
-                                                <button type="submit" style="color:snow" class="btn split-btn-success btn-block" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
-                                            </div>
+                    @using (Html.BeginForm("ExternalLogin", "Account"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div id="socialLoginList">
+                            <p>
+                                @foreach (AuthenticationDescription p in loginProviders)
+                                {
+                                    <div class="form-row mt-4">
+                                        <div class="form-group mb-0 col">
+                                            <button type="submit" style="color:snow" class="btn split-btn-success btn-block" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
                                         </div>
-                                    }
-                                </p>
-                            </div>
+                                    </div>
+                                }
+                            </p>
+                        </div>
 
-                        }
-                    </div>
-                </div>
-                <div class="card-footer text-center py-3">
-                    <p class="text-warning mb-0">Already have an account? <a href="@Url.Action("Login", "Account")"> Sign In here</a></p>
+                    }
                 </div>
             </div>
+            <div class="card-footer text-center py-3">
+                <p class="text-warning mb-0">Already have an account? <a href="@Url.Action("Login", "Account")"> Sign In here</a></p>
+            </div>
+          
+            <div class="card-footer text-center py-3">
+                <p class="text-warning mb-0">Demo the Software-> <a href="@Url.Action("DemoLogin", "Account")"> Demo Sign In</a></p>
+            </div>
+        </div>
 
             <!--Start Back To Top Button-->
             <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
@@ -129,7 +140,7 @@
                     <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
                 </div>
                 <div class="right-sidebar-content">
-
+                    <p class="mb-0">Demo Themes</p>
                     <p class="mb-0">Gaussion Texture</p>
                     <hr>
 

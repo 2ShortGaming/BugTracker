@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using BugTracker.Helpers;
 using Microsoft.AspNet.Identity;
 using BugTracker.Models;
-
+using System.Threading.Tasks;
 
 namespace BugTracker.Controllers
 {
@@ -17,15 +17,19 @@ namespace BugTracker.Controllers
     [RequireHttps]
     public class TicketsController : Controller
     {
-        
+
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectHelper projectHelper = new ProjectHelper();
         private RolesHelper rolesHelper = new RolesHelper();
         private TicketHelper ticketHelper = new TicketHelper();
         private HistoryHelper historyHelper = new HistoryHelper();
-        
+        private NotificationHelper notificationHelper = new NotificationHelper();
+        public ActionResult Unauthorized()
+        {
+            return View();
+        }
         // GET: Tickets
-        
+
         public ActionResult Index()
         {
             //var userId = User.Identity.GetUserId();
@@ -50,7 +54,7 @@ namespace BugTracker.Controllers
             //return View(model);
             return View(db.Tickets.ToList());
         }
-        
+
         public ActionResult GetProjectTickets()
         {
             var userId = User.Identity.GetUserId();
@@ -63,9 +67,9 @@ namespace BugTracker.Controllers
         {
             var userId = User.Identity.GetUserId();
             var ticketList = new List<Ticket>();
-            if(User.IsInRole("Developer"))
+            if (User.IsInRole("Developer"))
             {
-               ticketList = db.Tickets.Where(t => t.DeveloperId == userId).ToList();
+                ticketList = db.Tickets.Where(t => t.DeveloperId == userId).ToList();
                 return View("Index", ticketList);
             }
             if (User.IsInRole("Submitter"))
@@ -139,7 +143,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Edit/5
-        [Authorize(Roles = "Developer, Submitter")]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -147,6 +151,13 @@ namespace BugTracker.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ticket ticket = db.Tickets.Find(id);
+            if (!ticketHelper.MyTicket((int)id))
+            {
+                TempData["ErrorMsg"] = $"Ticket Id: {id} is not allowed for Edit by the current user because this is not your Ticket.";
+                return RedirectToAction("Unauthorized", "Tickets");
+            }
+
+
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -164,7 +175,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Developer, Submitter")]
-        public ActionResult Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,IsResolved,IsArchived")] Ticket ticket)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,IsResolved,IsArchived")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -173,8 +184,9 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
 
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-                historyHelper.ManageHistories(oldTicket, newTicket); 
+                historyHelper.ManageHistories(oldTicket, newTicket);
                 ticketHelper.EditedTicket(oldTicket, newTicket);
+                await notificationHelper.ManageNotifications(oldTicket, newTicket);
                 return RedirectToAction("Index");
             }
             ViewBag.DeveloperId = new SelectList(db.Projects, "Id", "Name", ticket.DeveloperId);
@@ -184,7 +196,7 @@ namespace BugTracker.Controllers
             return View(ticket);
         }
 
-       
+
 
         protected override void Dispose(bool disposing)
         {

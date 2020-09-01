@@ -7,6 +7,8 @@
     var ticketHelper = new TicketHelper();
     var roleHelper = new RolesHelper();
     var historyHelper = new HistoryHelper();
+    var notificationHelper = new NotificationHelper();
+    
 }
 
 
@@ -19,7 +21,7 @@
             <div class="row row-group m-0">
                 <div class="col-12 col-lg-6 col-xl-3 border-light">
                     <div class="card-body">
-                        <h5 class="text-white mb-0">12 <span class="float-right"><i class="fa fa-archive"></i></span></h5>
+                        <h5 class="text-white mb-0">@projectHelper.AllProjects().Count <span class="float-right"><i class="fa fa-archive"></i></span></h5>
                         <div class="progress my-3" style="height:3px;">
                             <div class="progress-bar" style="width:100%"></div>
                         </div>
@@ -58,7 +60,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-lg-8 col-xl-8">
+        <div class="col-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
                     My Tickets: @ticketHelper.GetMyTickets().Count
@@ -81,7 +83,7 @@
 
                     <div class="chart-container-1">
 
-                        <table id="table" class="table table-responsive-sm table-bordered table-light col-md-8">
+                        <table id="table" class="table table-responsive-sm table-bordered table-light col-md-12">
                             <thead>
                                 <tr>
                                     <th>
@@ -105,16 +107,16 @@
                                 @foreach (var item in ticketHelper.GetMyTickets())
                                 {
                                     <tr>
-                                        <td style="background-color:chocolate">
-                                           @item.Project.Name
+                                        <td style="background-color:dimgray">
+                                            @item.Project.Name
                                         </td>
-                                        <td style="background-color:chocolate">
+                                        <td style="background-color:dimgray">
                                             @item.TicketType.Name
                                         </td>
-                                        <td style="background-color:chocolate">
+                                        <td style="background-color:dimgray">
                                             @item.TicketPriority.Name
                                         </td>
-                                        <td style="background-color:chocolate">
+                                        <td style="background-color:dimgray">
                                             @item.TicketStatus.Name
                                         </td>
                                     </tr>
@@ -128,64 +130,39 @@
             </div>
         </div>
 
-        <div class="col-12 col-lg-4 col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    Tickets Priorities
-                    <div class="card-action">
-                        <div class="dropdown">
-                            <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-                                <i class="icon-options"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="javascript:void();">Action</a>
-                                <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart-container-1">
-                        <div id="priorityChart" style="height:250px; width:225px"></div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
     </div><!--End Row-->
 
     <div class="row">
         <div class="col-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    My Projects: @projectHelper.GetMyProjects().Count 
+                    My Projects: @projectHelper.GetMyProjects().Count
                     <div class="card-action">
                         <div class="dropdown">
                             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
                                 <i class="icon-options"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="javascript:void();">Action</a>
-                                <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Projects")">All Projects</a>
+
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void();">Separated link</a>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table id="table4" class="table table-bordered table-light">
+                <div class="card-body">
 
-                        <thead>
+                    <div class="chart-container-1">
+                        <table id="table4" class="table table-responsive-sm table-bordered table-light">
+
+                            <thead>
                                 <tr>
                                     <th>
                                         @Html.DisplayName("Project Name")
                                     </th>
-                                    
+
                                 </tr>
                             </thead>
 
@@ -193,18 +170,19 @@
                                 @foreach (var project in projectHelper.GetMyProjects())
                                 {
                                     <tr>
-                                        <td style="background-color:chocolate">
+                                        <td style="background-color:dimgray">
                                             @project.Name
                                         </td>
-                                      
+
 
                                     </tr>
                                 }
 
                             </tbody>
 
-                    </table>
+                        </table>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,23 +192,12 @@
     <div class="col-12 col-md-6">
         <div class="card">
             <div class="card-header">
-                Ticket Status
+                Ticket Priority
                 <div class="card-action">
-                    <div class="dropdown">
-                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-                            <i class="icon-options"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                            <a class="dropdown-item" href="javascript:void();">Another action</a>
-                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-            <div class="table-responsive" id="statusChart">
+            <div class="table" id="priorityChart">
 
 
             </div>
@@ -241,18 +208,7 @@
             <div class="card-header">
                 Ticket Type
                 <div class="card-action">
-                    <div class="dropdown">
-                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-                            <i class="icon-options"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                            <a class="dropdown-item" href="javascript:void();">Another action</a>
-                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div class="table" id="typeChart">
@@ -261,8 +217,21 @@
             </div>
         </div>
     </div>
-   
+    <div class="col-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Ticket Status
+                <div class="card-action">
 
+                </div>
+            </div>
+            <div class="table" id="statusChart">
+
+
+            </div>
+        </div>
+    </div> 
+    
 
 
 </div><!--End Row-->
@@ -291,7 +260,9 @@
                                  ykeys: ['value'],
                                  // Labels for the ykeys -- will be displayed when you hover over the
                                  // chart.
+                                 labelColor: ['snow'],
                                  labels: ['Value']
+
                              });
                          },
                          error: function (jqXHR, textStatus, errorThrown) {
@@ -318,7 +289,7 @@
                                  ykeys: ['value'],
                                  // Labels for the ykeys -- will be displayed when you hover over the
                                  // chart.
-                                
+                                 barColors: ['lightgray'],
                                  labels: ['Value']
                              });
                          },
@@ -346,14 +317,19 @@
                                  ykeys: ['value'],
                                  // Labels for the ykeys -- will be displayed when you hover over the
                                  // chart.
-                             
+                                 labelColor: ['snow'],
+                                 //colors: ["#ffe6cc", "#ffcc99", "#ffb366", "#ff9933", "#ff8000", "dimgray"],
                                  labels: ['Value']
+
                              });
                          },
                          error: function (jqXHR, textStatus, errorThrown) {
                              alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
                          },
                      });
+
+                      
+
         </script>
     }
 }

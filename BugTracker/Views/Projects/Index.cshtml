@@ -14,7 +14,7 @@
 </style>
 
 
-@if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+@if (User.IsInRole("Admin"))
 {
     <br />
     <br />
@@ -23,7 +23,7 @@
         @Html.ActionLink("+Create New Project", "ProjectWizard")
     </button>
 
-    
+
 }
 
 
@@ -34,72 +34,106 @@
 <br />
 
 @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+{
+    @Html.AntiForgeryToken()
 
-        @*<div class="row">
-            <div class="col-md-9 col-md-offset-3">
-                <div class="form-group">
-                    @/*Html.Label("UserIds", "Users", htmlAttributes: new { @class = "control-label col-md-12" })*/
-                    <div class="col-md-12" style="color:snow">
-                        @/*Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })*/
+    @*<div class="row">
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="form-group">
+                            @Html.Label("UserId", "Users", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12" style="color:snow">
+                                @Html.ListBox("UserIds", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
                     </div>
+                </div>*@
+        @*<div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        @Html.Label("ProjectId", "Projects", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12" style="color:snow">
+                            @Html.DropDownList("Projects", null, "--Remove From Project--", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @Html.DropDownList("Add to Project", "--Remove From Project--")
                 </div>
-            </div>
-        </div>
-<div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                @/*Html.Label("ProjectIds", "Projects", htmlAttributes: new { @class = "control-label col-md-12" })*/
-                <div class="col-md-12" style="color:snow">
-                    @/*Html.DropDownList("ProjectIds", null, "--Remove From Project--", htmlAttributes: new { @class = "form-control" })*/
-                </div>
-            </div>
-            @Html.DropDownList("Add to Project", "--Remove From Project--")
-        </div>
 
-    </div>*@
-@*<div class="row">
+            </div>*@
+    @*<div class="row">
             <div class="col-md-offset-3 col-md-4">
                 <button type="submit" class="btn btn-danger">Manage Project Assignment(s)</button>
             </div>
         </div>*@
+}
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="card-action">
+
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="chart-container">
+                    <table id="table" class="table table-bordered table-light col-12">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Project Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Participants")
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var project in Model)
+                            {
+                                <tr>
+                                    <td style="background-color:dimgray">
+                                        @project.Name
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @foreach (var user in projectHelper.ListUsersOnProject(project.Id))
+                                        {
+                                            @user.FullName <br />
+                                        }
+                                    </td>
+
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                    {
+                                        <td style="background-color:dimgray">
+
+                                            @Html.ActionLink("Details", "Details", new { id = project.Id }) |
+
+                                            @Html.ActionLink("Edit", "Edit", new { id = project.Id }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = project.Id })
+
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="background-color:dimgray">
+                                            @Html.ActionLink("Details", "Details", new { id = project.Id })
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        //$('#table6').DataTable();
+    </script>
     }
-
-<table class="table table-light table-borderless col-12">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayName("Project Name")
-            </th>
-            <th>
-                @Html.DisplayName("Participants")
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var project in Model)
-        {
-            <tr>
-                <td style="background-color:chocolate">
-                    @project.Name
-                </td>
-                <td style="background-color:chocolate">
-                    @foreach (var user in projectHelper.ListUsersOnProject(project.Id))
-                    {
-                        @user.FullName <br />
-                    }
-                </td>
-                <td style="background-color:chocolate">
-                    @Html.ActionLink("Edit", "Edit", new { id = project.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = project.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = project.Id })
-                </td>
-            </tr>
-        }
-
-    </tbody>
-
-</table>
-
