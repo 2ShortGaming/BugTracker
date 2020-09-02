@@ -18,7 +18,7 @@ using BugTracker.ViewModels;
 namespace BugTracker.Controllers
 {
     [Authorize]
-    //[RequireHttps]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
