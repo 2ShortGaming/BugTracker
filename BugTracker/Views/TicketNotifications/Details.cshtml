@@ -7,23 +7,23 @@
 <h2>Details</h2>
 
 <div>
-    <h4>TicketNotification</h4>
+    <h4>Ticket Notification</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Ticket.SubmitterId)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ticket.SubmitterId)
+            @Html.DisplayFor(model => model.User.FullName)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.User.FirstName)
+            @Html.DisplayNameFor(model => model.Subject)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
+            @Html.DisplayFor(model => model.Subject)
         </dd>
 
         <dt>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsRead)
+            Is Read?
         </dt>
 
         <dd>

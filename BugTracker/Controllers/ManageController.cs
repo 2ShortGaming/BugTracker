@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
+using System.Web.Configuration;
+using BugTracker.Extensions;
 
 namespace BugTracker.Controllers
 {
@@ -16,7 +18,7 @@ namespace BugTracker.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ManageController()
         {
         }
@@ -243,6 +245,27 @@ namespace BugTracker.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        //GET: /Manage/UpdateProfile
+        public ActionResult UpdateProfile()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            return View(user);
+        }
+
+        //POST:
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateProfile(ApplicationUser model)
+        {
+            var user = db.Users.Find(model.Id);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.AvatarPath = WebConfigurationManager.AppSettings["DefaultAvatarPath"];
+            db.SaveChanges();
+            await AuthorizeExtensions.RefreshAuthentication(HttpContext, user);
+            return View(user);
         }
 
         //

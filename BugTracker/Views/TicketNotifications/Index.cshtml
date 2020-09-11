@@ -1,57 +1,174 @@
 ﻿@model IEnumerable<BugTracker.Models.TicketNotification>
+@using BugTracker.Helpers
+@using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "Index";
+
+    var userHelper = new UserHelper();
+    var notificationHelper = new NotificationHelper();
+}
+<br />
+<br />
+<h2>Notifications</h2>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+{
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+
+                    <div class="card-action">
+
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="chart-container-1">
+                        <table id="table8" class="table table-responsive-sm table-bordered table-light col-md-12">
+                            <tr>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Subject)
+                                </th>
+                               
+                                <th>
+                                    Notification Type
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Created)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IsRead)
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.User.FirstName)
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.User.LastName)
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.Subject)
+                                    </td>
+                                  
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.NotificationType)
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.Created)
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @Html.DisplayFor(modelItem => item.IsRead)
+                                    </td>
+                                    <td style="background-color:dimgray">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+
+                    <div class="card-action">
+
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="chart-container-1">
+                        <table id="table9" class="table table-responsive-sm table-bordered table-light col-md-12">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        First Name
+                                    </th>
+                                    <th>
+                                        Last Name
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Subject)
+                                    </th>
+                                    
+                                    <th>
+                                        Notification Type
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Created)
+                                    </th>
+                                    <th>
+                                        Is Read?
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            @foreach (var note in notificationHelper.ListUsersNotifications(User.Identity.GetUserId()))
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color:dimgray">
+                                            @note.User.FirstName
+                                        </td>
+                                        <td style="background-color:dimgray">
+                                            @note.User.LastName
+                                        </td>
+                                        <td style="background-color:dimgray">
+                                            @note.Subject
+                                        </td>
+                                       
+                                        <td style="background-color:dimgray">
+                                            @note.NotificationType
+                                        </td>
+                                        <td style="background-color:dimgray">
+                                            @note.Created
+                                        </td>
+                                        <td style="background-color:dimgray">
+                                            @note.IsRead
+                                        </td>
+                                        <td style="background-color:dimgray">
+                                            @Html.ActionLink("Edit", "Edit", new { id = note.Id }) |
+                                            @Html.ActionLink("Details", "Details", new { id = note.Id }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = note.Id })
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Ticket.Submitter.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsRead)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ticket.Submitter.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsRead)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@section scripts{
+    <script>
+        $('#table8').DataTable({ "scrollX": true });
+        $('#table9').DataTable({ "scrollX": true });
+    </script>
 }
-
-</table>

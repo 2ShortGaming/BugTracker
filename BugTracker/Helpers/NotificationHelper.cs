@@ -58,6 +58,7 @@ namespace BugTracker.Helpers
                 IsRead = false,
                 UserId = newTicket.DeveloperId,
                 Created = DateTime.Now,
+                Subject = $"New Assignment",
                 Message = $"Hello {newTicket.Developer.FullName}, you have been assigned to Ticket Id {newTicket.Id} titled '{newTicket.Issue}' on Project '{newTicket.Project.Name}'"
             };
             db.TicketNotifications.Add(notification);
@@ -89,6 +90,7 @@ namespace BugTracker.Helpers
                 IsRead = false,
                 UserId = oldTicket.DeveloperId,
                 Created = DateTime.Now,
+                Subject = $"New Unassignment",
                 Message = $"Hello {oldTicket.Developer.FullName}, you have been unassigned from Ticket Id {oldTicket.Id} titled '{oldTicket.Issue}' on Project '{oldTicket.Project.Name}'"
             };
             db.TicketNotifications.Add(notification);
@@ -113,6 +115,8 @@ namespace BugTracker.Helpers
 
         }
 
+
+       
 
 
         #region one way

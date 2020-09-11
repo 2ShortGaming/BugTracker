@@ -57,5 +57,17 @@ namespace BugTracker.Helpers
         {
             throw new NotImplementedException();
         }
+        public bool UpdateUserRole(string userId, string roleName)
+        {
+            var currentRoles = ListUserRoles(userId);
+            if (currentRoles.Count != 0)
+            {
+                foreach(var role in currentRoles)
+                {
+                    RemoveUserFromRole(userId, roleName);
+                }
+            }
+                return AddUserToRole(userId, roleName);
+        }
     }
 }

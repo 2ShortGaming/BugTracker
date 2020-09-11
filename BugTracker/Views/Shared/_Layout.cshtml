@@ -151,7 +151,29 @@
                         </li>*@
                 </ul>
                 <ul class="navbar-nav align-items-center right-nav-link">
-                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i>
+                            @if (notifications.Where(n => n.IsRead == false).ToList().Count > 0)
+                            {
+                                <span class="badge badge-warning navbar-badge">@notifications.Where(n => n.IsRead == false).ToList().Count</span>
+                            }
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">@notifications.Where(n => n.IsRead == false).ToList().Count Notifications</span>
+                            <div class="dropdown-divider"></div>
+                            @foreach (var note in notifications.Where(n => n.IsRead == false).ToList().Take(5))
+                            {
+                                <a href="@Url.Action("Details", "TicketNotifications", new { id = note.Id })" class="dropdown-item">
+                                    <i class="fa fa-exclamation mr-2"> New Message</i>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                            }
+                            <a href="@Url.Action("Index", "TicketNotifications")" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        </div>
+                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
@@ -170,7 +192,7 @@
                                 </a>
                             </li>
                             <li class="dropdown-divider"></li>
-                            <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Notifications</li>
+                            @*<li class="dropdown-item"><i class="icon-envelope mr-2"></i> Notifications</li>*@
                             <li class="dropdown-divider"></li>
                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "preview-subject mb-1" }))
                             {
@@ -180,6 +202,7 @@
                         </ul>
                     </li>
                 </ul>
+
             </nav>
         </header>
         <!--End topbar header-->
